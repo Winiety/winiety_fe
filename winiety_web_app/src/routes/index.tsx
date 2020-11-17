@@ -1,10 +1,18 @@
 import React, { ReactElement } from 'react';
 import { Switch, Route } from 'react-router-dom';
+import NotFound from './NotFound';
 
-export default (): ReactElement => {
+const appRoutes = {
+  home: '/',
+};
+
+export const RoutedContent = (): ReactElement => {
   return (
     <Switch>
-      <Route />
+      <Route path={appRoutes.home} exact component={() => <h1>kek</h1>} />
+      <Route component={NotFound} />
     </Switch>
   );
 };
+
+export default appRoutes;

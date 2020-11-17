@@ -36,6 +36,16 @@
     "import"
   ],
   "rules": {
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
     "linebreak-style": "off",
     "prettier/prettier": [
       "error",
