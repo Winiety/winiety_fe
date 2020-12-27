@@ -3,13 +3,16 @@ import { RoutedContent } from 'routes';
 import { CssBaseline, MuiThemeProvider } from '@material-ui/core';
 import { dark } from 'themes';
 import { BrowserRouter } from 'react-router-dom';
+import Layout from 'layout';
 
 const App = (): ReactElement => {
   return (
     <MuiThemeProvider theme={dark}>
       <CssBaseline />
       <BrowserRouter>
-        <RoutedContent />
+        <Layout>
+          <RoutedContent />
+        </Layout>
       </BrowserRouter>
     </MuiThemeProvider>
   );
