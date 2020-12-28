@@ -2,12 +2,10 @@ import {
   FormGroup,
   FormControlLabel,
   Toolbar,
-  IconButton,
   Typography,
   Switch,
   AppBar,
 } from '@material-ui/core';
-import { Menu as MenuIcon } from '@material-ui/icons';
 import React, { ReactElement } from 'react';
 import { AuthMenu } from './modules';
 
@@ -38,14 +36,6 @@ const AppBarComp = (): ReactElement => {
               label={auth ? 'Logout' : 'Login'}
             />
           </FormGroup>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
-          >
-            <MenuIcon />
-          </IconButton>
           <Typography variant="h6" className={classes.title}>
             WINIETY
           </Typography>

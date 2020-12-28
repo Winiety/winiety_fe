@@ -17,7 +17,9 @@ export const RoutedContent = (): ReactElement => {
             {Array.from(Array(100)).map(() => (
               <h1>kek</h1>
             ))}
+            <h1>kek last</h1>
           </>
+          // <div className="h-100" style={{ backgroundColor: 'white' }} />
         )}
       />
       <Route component={NotFound} />

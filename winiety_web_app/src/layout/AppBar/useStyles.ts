@@ -7,12 +7,6 @@ export default makeStyles((theme: Theme) =>
     },
     menuButton: {
       marginRight: theme.spacing(2),
-      '&:hover': {
-        outline: 'none',
-      },
-      '&:focus': {
-        outline: 'none',
-      },
     },
     title: {
       flexGrow: 1,
