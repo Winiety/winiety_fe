@@ -9,7 +9,19 @@ const appRoutes = {
 export const RoutedContent = (): ReactElement => {
   return (
     <Switch>
-      <Route path={appRoutes.home} exact component={() => <h1>kek</h1>} />
+      <Route
+        path={appRoutes.home}
+        exact
+        component={() => (
+          <>
+            {Array.from(Array(100)).map(() => (
+              <h1>kek</h1>
+            ))}
+            <h1>kek last</h1>
+          </>
+          // <div className="h-100" style={{ backgroundColor: 'white' }} />
+        )}
+      />
       <Route component={NotFound} />
     </Switch>
   );

@@ -53,6 +53,7 @@
         "endOfLine": "auto",
         "singleQuote": true
       }
-    ]
+    ],
+    "react/require-default-props": "off"
   }
 }
