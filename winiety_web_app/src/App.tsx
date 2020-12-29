@@ -1,20 +1,21 @@
 import React, { ReactElement } from 'react';
 import { RoutedContent } from 'routes';
-import { CssBaseline, MuiThemeProvider } from '@material-ui/core';
-import { dark } from 'themes';
+import { CssBaseline } from '@material-ui/core';
 import { BrowserRouter } from 'react-router-dom';
 import Layout from 'layout';
 
 const App = (): ReactElement => {
   return (
-    <MuiThemeProvider theme={dark}>
-      <CssBaseline />
+    <>
       <BrowserRouter>
         <Layout>
-          <RoutedContent />
+          <>
+            <CssBaseline />
+            <RoutedContent />
+          </>
         </Layout>
       </BrowserRouter>
-    </MuiThemeProvider>
+    </>
   );
 };
 
