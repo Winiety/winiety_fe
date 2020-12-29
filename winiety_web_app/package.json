@@ -13,6 +13,7 @@
     "@types/react": "^16.9.53",
     "@types/react-dom": "^16.9.8",
     "classnames": "^2.2.6",
+    "easy-peasy": "^4.0.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
