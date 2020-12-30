@@ -1,12 +1,15 @@
 import React, { ReactElement } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import NotFound from './NotFound';
+import userManager from '../userManager';
 
 const appRoutes = {
   home: '/',
 };
 
 export const RoutedContent = (): ReactElement => {
+  userManager.signinRedirect();
+
   return (
     <Switch>
       <Route
