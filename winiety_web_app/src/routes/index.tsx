@@ -1,30 +1,22 @@
 import React, { ReactElement } from 'react';
 import { Switch, Route } from 'react-router-dom';
+import Home from './Home';
 import NotFound from './NotFound';
-import userManager from '../userManager';
+import SigninOidc from './SignInOidc';
+import SignoutOidc from './SignOutOidc';
 
 const appRoutes = {
   home: '/',
+  signIn: '/sign-in',
+  signOut: '/sign-out',
 };
 
 export const RoutedContent = (): ReactElement => {
-  userManager.signinRedirect();
-
   return (
     <Switch>
-      <Route
-        path={appRoutes.home}
-        exact
-        component={() => (
-          <>
-            {Array.from(Array(100)).map(() => (
-              <h1>kek</h1>
-            ))}
-            <h1>kek last</h1>
-          </>
-          // <div className="h-100" style={{ backgroundColor: 'white' }} />
-        )}
-      />
+      <Route path={appRoutes.signIn} component={SigninOidc} />
+      <Route path={appRoutes.signOut} component={SignoutOidc} />
+      <Route path={appRoutes.home} exact component={Home} />
       <Route component={NotFound} />
     </Switch>
   );
