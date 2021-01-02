@@ -1,9 +1,11 @@
 import React, { ReactElement } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import NotFound from './NotFound';
+import UserProfile from './UserProfile/UserProfile';
 
-const appRoutes = {
+export const appRoutes = {
   home: '/',
+  userProfile: '/profile',
 };
 
 export const RoutedContent = (): ReactElement => {
@@ -22,6 +24,7 @@ export const RoutedContent = (): ReactElement => {
           // <div className="h-100" style={{ backgroundColor: 'white' }} />
         )}
       />
+      <Route path={appRoutes.userProfile} exact component={UserProfile} />
       <Route component={NotFound} />
     </Switch>
   );

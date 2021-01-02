@@ -1,10 +1,14 @@
 import { IconButton, Menu, MenuItem } from '@material-ui/core';
 import { AccountCircle } from '@material-ui/icons';
 import React, { ReactElement } from 'react';
+import { useHistory } from 'react-router-dom';
+import appRoutes from 'routes';
 
 const AuthMenu = (): ReactElement => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
+  const history = useHistory();
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -12,6 +16,11 @@ const AuthMenu = (): ReactElement => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleProfileClick = () => {
+    history.push(appRoutes.userProfile);
+    handleClose();
   };
 
   return (
@@ -40,7 +49,7 @@ const AuthMenu = (): ReactElement => {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
+        <MenuItem onClick={handleProfileClick}>Profil</MenuItem>
         <MenuItem onClick={handleClose}>My account</MenuItem>
       </Menu>
     </div>

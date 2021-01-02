@@ -57,7 +57,7 @@ const AppBarComp = (): ReactElement => {
                 aria-label="dark theme switch"
               />
             }
-            label="Dark theme"
+            label="Ciemny motyw"
           />
           {auth && <AuthMenu />}
         </Toolbar>
