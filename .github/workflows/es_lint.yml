@@ -1,0 +1,47 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the develop branch
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      - name: Use Node.js 12.19.0
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.19.0
+          
+      - name: yarn install
+        working-directory: winiety_web_app
+        run: yarn install
+      
+      # Runs a single command using the runners shell
+      - name: ESLint checker
+        # You may pin to the exact commit or the version.
+        # uses: ninosaurus/eslint-check@30ce7263e3f4b0bebc3cc06897bdf4ab8524a424
+        uses: ninosaurus/eslint-check@v5.3.1
+        with:
+          # github security token
+          repo-token: ${{secrets.GITHUB_TOKEN}}
+          # relative directory to node_modules
+          custom-directory: winiety_web_app/node_modules
+          # relative path to eslint config file eg. .eslintrc
+          eslint-config-path: winiety_web_app/.eslintrc.json
