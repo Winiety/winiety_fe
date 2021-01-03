@@ -15,7 +15,6 @@ import useStyles from './useStyles';
 const AppBarComp = (): ReactElement => {
   const classes = useStyles();
   const [auth, setAuth] = React.useState(true);
-  console.log('test123');
 
   const changeTheme = useStoreActions(
     (actions) => actions.userSettings.changeTheme

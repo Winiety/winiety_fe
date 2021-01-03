@@ -22,9 +22,9 @@ const userSessionModel: UserSessionModel = {
     signOutRedirect();
   }),
   setSession: action((state, payload) => {
+    var test = 123;
     // eslint-disable-next-line no-param-reassign
     state.isAuthenticated = true;
-    // eslint-disable-next-line no-param-reassign
     state.accessToken = payload.access_token;
     setAuthHeader(payload.access_token);
   }),
