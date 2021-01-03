@@ -3,6 +3,7 @@ import React, { ReactElement, useState } from 'react';
 import { TabPanel } from 'components';
 import SwipeableViews from 'react-swipeable-views';
 import useStyles from './use-styles';
+import { ProfileTab } from './Tabs';
 
 enum TabType {
   PROFILE,
@@ -49,10 +50,11 @@ const UserProfile = (): ReactElement => {
         index={activeTab}
         onChangeIndex={handleChangeIndex}
         className={classes.views}
+        // containerStyle={{ height: '100%' }}
         resistance
       >
         <TabPanel className={classes.panel} index={TabType.PROFILE}>
-          Item One
+          <ProfileTab />
         </TabPanel>
         <TabPanel index={TabType.CARS}>Item Two</TabPanel>
       </SwipeableViews>

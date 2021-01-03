@@ -1,6 +1,6 @@
 import faker from 'faker';
 
-interface UserProfile {
+export interface UserProfile {
   birthYear: number;
   phone: string;
   country: string;
@@ -11,7 +11,7 @@ interface UserProfile {
 }
 
 const getProfile = (): UserProfile => ({
-  birthYear: faker.date.past().getFullYear(),
+  birthYear: faker.date.past(80).getFullYear(),
   phone: faker.phone.phoneNumber('!##-!##-###'),
   country: faker.address.country(),
   city: faker.address.city(),

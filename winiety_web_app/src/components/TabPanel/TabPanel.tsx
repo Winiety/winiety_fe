@@ -24,9 +24,7 @@ const TabPanel = (props: TabPanelProps): ReactElement => {
       {...other}
     >
       <Box p={3} height="100%">
-        <Paper className={classes.paper}>
-          <Typography>{children}</Typography>
-        </Paper>
+        <Paper className={classes.paper}>{children}</Paper>
       </Box>
     </div>
   );
