@@ -26,5 +26,5 @@ jobs:
         run: |
           cd winiety_web_app
           yarn
-          eslint . --ext .js,.jsx,.ts,.tsx
+          yarn run eslint . --ext .js,.jsx,.ts,.tsx
 
