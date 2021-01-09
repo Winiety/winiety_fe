@@ -3,7 +3,7 @@ import React, { ReactElement, useState } from 'react';
 import { TabPanel } from 'components';
 import SwipeableViews from 'react-swipeable-views';
 import useStyles from './use-styles';
-import { ProfileTab } from './Tabs';
+import { CarsTab, ProfileTab } from './Tabs';
 
 enum TabType {
   PROFILE,
@@ -17,9 +17,8 @@ const UserProfile = (): ReactElement => {
   const theme = useTheme();
   const matchesSmall = useMediaQuery(theme.breakpoints.up('sm'));
 
-  // eslint-disable-next-line @typescript-eslint/ban-types
   const handleChange = (
-    event: React.ChangeEvent<unknown>,
+    _event: React.ChangeEvent<unknown>,
     newValue: number
   ) => {
     setActiveTab(newValue);
@@ -50,13 +49,14 @@ const UserProfile = (): ReactElement => {
         index={activeTab}
         onChangeIndex={handleChangeIndex}
         className={classes.views}
-        // containerStyle={{ height: '100%' }}
         resistance
       >
         <TabPanel className={classes.panel} index={TabType.PROFILE}>
           <ProfileTab />
         </TabPanel>
-        <TabPanel index={TabType.CARS}>Item Two</TabPanel>
+        <TabPanel index={TabType.CARS}>
+          <CarsTab />
+        </TabPanel>
       </SwipeableViews>
     </div>
   );
