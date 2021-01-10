@@ -13,7 +13,7 @@ interface InitialState {
 }
 
 const storeModel: StoreModel = {
-  userSettings: userSettingsModel,
+  userSettings: persist(userSettingsModel),
   userSession: persist(userSessionModel),
 };
 

@@ -9,18 +9,18 @@ import useStyles from './styles';
 const SignInOidc = (): ReactElement => {
   const classes = useStyles();
   const history = useHistory();
-  const setSession = useStoreActions(
-    (actions) => actions.userSession.setSession
-  );
+  const login = useStoreActions((actions) => actions.userSession.login);
 
   useEffect(() => {
-    const signinAsync = async () => {
-      const user = await signInRedirectCallback();
-      setSession(user);
+    const signInAsync = async () => {
+      const accessToken = (await signInRedirectCallback())?.access_token;
+      if (accessToken !== '') {
+        login(accessToken);
+      }
       history.push(routes.home);
     };
-    signinAsync();
-  }, [history, setSession]);
+    signInAsync();
+  }, [history, login]);
 
   return (
     <Container component="main" maxWidth="xs">

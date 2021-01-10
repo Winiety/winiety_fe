@@ -7,6 +7,7 @@ import Layout from 'layout';
 
 const App = (): ReactElement => {
   const isRehydrated = useStoreRehydrated();
+
   return (
     <>
       <BrowserRouter>
