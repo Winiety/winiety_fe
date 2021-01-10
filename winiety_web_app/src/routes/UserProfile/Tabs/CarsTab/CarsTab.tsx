@@ -1,19 +1,30 @@
 import { Button, Grid } from '@material-ui/core';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import CarCard from './CarCard';
 import carGenerator from '../../generators/car-generator';
 import useStyles from './use-styles';
+import { AddCarModal } from './Modals';
 
 interface CarsTabProps {
   className?: string;
 }
 const cars = Array.from(Array(5), () => carGenerator());
 const CarsTab = (props: CarsTabProps): ReactElement => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { className } = props;
   const classes = useStyles();
+
+  const handleModalOpen = () => setIsModalOpen(true);
+  const handleModalClose = () => setIsModalOpen(false);
+
   return (
     <div className={className}>
-      <Button variant="contained" color="primary" fullWidth>
+      <Button
+        onClick={handleModalOpen}
+        variant="contained"
+        color="primary"
+        fullWidth
+      >
         Dodaj samochód
       </Button>
       <Grid className={classes.grid} container spacing={2}>
@@ -29,6 +40,7 @@ const CarsTab = (props: CarsTabProps): ReactElement => {
           </Grid>
         ))}
       </Grid>
+      <AddCarModal open={isModalOpen} handleClose={handleModalClose} />
     </div>
   );
 };
