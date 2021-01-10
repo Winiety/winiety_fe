@@ -17,7 +17,7 @@ const SignInOidc = (): ReactElement => {
       if (accessToken !== '') {
         login(accessToken);
       }
-      history.push(routes.home);
+      history.push(routes.rides);
     };
     signInAsync();
   }, [history, login]);
