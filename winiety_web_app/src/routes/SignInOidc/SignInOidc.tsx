@@ -1,4 +1,3 @@
-import { Container, CssBaseline } from '@material-ui/core';
 import React, { useEffect, ReactElement } from 'react';
 import { signInRedirectCallback } from 'services/userService';
 import { useHistory } from 'react-router-dom';
@@ -23,12 +22,9 @@ const SignInOidc = (): ReactElement => {
   }, [history, login]);
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <h1>Ładowanie</h1>
-      </div>
-    </Container>
+    <div className={classes.paper}>
+      <h1>Ładowanie</h1>
+    </div>
   );
 };
 

@@ -1,4 +1,3 @@
-import { Container, CssBaseline } from '@material-ui/core';
 import React, { ReactElement, useEffect } from 'react';
 import { signOutRedirectCallback } from 'services/userService';
 import { useHistory } from 'react-router-dom';
@@ -21,12 +20,9 @@ const SignOutOidc = (): ReactElement => {
   }, [history, logout]);
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <h1>Ładowanie</h1>
-      </div>
-    </Container>
+    <div className={classes.paper}>
+      <h1>Ładowanie</h1>
+    </div>
   );
 };
 
