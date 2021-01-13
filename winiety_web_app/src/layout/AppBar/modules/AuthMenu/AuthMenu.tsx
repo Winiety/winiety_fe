@@ -1,10 +1,14 @@
 import { IconButton, Menu, MenuItem } from '@material-ui/core';
 import { AccountCircle } from '@material-ui/icons';
 import React, { ReactElement } from 'react';
+import { useStoreActions } from 'store';
 
 const AuthMenu = (): ReactElement => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const logout = useStoreActions(
+    (actions) => actions.userSession.initiateLogout
+  );
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -12,6 +16,10 @@ const AuthMenu = (): ReactElement => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    logout();
   };
 
   return (
@@ -42,6 +50,7 @@ const AuthMenu = (): ReactElement => {
       >
         <MenuItem onClick={handleClose}>Profile</MenuItem>
         <MenuItem onClick={handleClose}>My account</MenuItem>
+        <MenuItem onClick={handleLogout}>Wyloguj</MenuItem>
       </Menu>
     </div>
   );
