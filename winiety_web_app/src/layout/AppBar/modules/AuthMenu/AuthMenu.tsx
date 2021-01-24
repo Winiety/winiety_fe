@@ -2,6 +2,8 @@ import { IconButton, Menu, MenuItem } from '@material-ui/core';
 import { AccountCircle } from '@material-ui/icons';
 import React, { ReactElement } from 'react';
 import { useStoreActions } from 'store';
+import { useHistory } from 'react-router-dom';
+import appRoutes from 'routes';
 
 const AuthMenu = (): ReactElement => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -9,6 +11,8 @@ const AuthMenu = (): ReactElement => {
   const logout = useStoreActions(
     (actions) => actions.userSession.initiateLogout
   );
+
+  const history = useHistory();
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -20,6 +24,11 @@ const AuthMenu = (): ReactElement => {
 
   const handleLogout = () => {
     logout();
+  };
+
+  const handleProfileClick = () => {
+    history.push(appRoutes.userProfile);
+    handleClose();
   };
 
   return (
@@ -48,7 +57,7 @@ const AuthMenu = (): ReactElement => {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
+        <MenuItem onClick={handleProfileClick}>Profil</MenuItem>
         <MenuItem onClick={handleClose}>My account</MenuItem>
         <MenuItem onClick={handleLogout}>Wyloguj</MenuItem>
       </Menu>

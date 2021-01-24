@@ -6,12 +6,14 @@ import NotFound from './NotFound';
 import SigninOidc from './SignInOidc';
 import SignoutOidc from './SignOutOidc';
 import Rides from './Rides';
+import UserProfile from './UserProfile/UserProfile';
 
-const appRoutes = {
+export const appRoutes = {
   home: '/',
   signIn: '/sign-in',
   signOut: '/sign-out',
   rides: '/rides',
+  userProfile: '/profile',
 };
 
 export const RoutedContent = (): ReactElement => {
@@ -25,6 +27,7 @@ export const RoutedContent = (): ReactElement => {
         Component={Rides}
         requiredRoles={['user']}
       />
+      <Route path={appRoutes.userProfile} exact component={UserProfile} />
       <Route component={NotFound} />
     </Switch>
   );
