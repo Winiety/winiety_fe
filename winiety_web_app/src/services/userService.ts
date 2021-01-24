@@ -6,14 +6,14 @@ import {
 } from 'oidc-client';
 
 const userServiceConfig: UserManagerSettings = {
-  authority: 'https://localhost:5101',
+  authority: `${process.env.REACT_APP_SERVER_ORIGIN}:${process.env.REACT_APP_IDENTITY_PORT}`,
   client_id: 'react',
-  redirect_uri: 'http://localhost:3000/sign-in',
-  silent_redirect_uri: 'http://localhost:3000/sign-in',
+  redirect_uri: `${window.location.origin}/sign-in`,
+  silent_redirect_uri: `${window.location.origin}/sign-in`,
   response_type: 'id_token token',
   scope:
     'openid profile ai fines payment pictures rides statistics userprofile notification',
-  post_logout_redirect_uri: 'http://localhost:3000/sign-out',
+  post_logout_redirect_uri: `${window.location.origin}/sign-out`,
 };
 
 const userManager = new UserManager(userServiceConfig);
