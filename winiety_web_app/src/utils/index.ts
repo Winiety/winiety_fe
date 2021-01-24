@@ -1,1 +1,7 @@
-export default 'temp';
+export {
+  checkSupport,
+  displayNotification,
+  getSubscription,
+  requestNotificationPermission,
+  subscribeUser,
+} from './notifications';

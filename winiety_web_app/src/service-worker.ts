@@ -57,7 +57,8 @@ registerRoute(
 // precache, in this case same-origin .png requests like those from in public/
 registerRoute(
   // Add in any other file extensions or routing criteria as needed.
-  ({ url }) => url.origin === self.location.origin && url.pathname.endsWith('.png'),
+  ({ url }) =>
+    url.origin === self.location.origin && url.pathname.endsWith('.png'),
   // Customize this strategy as needed, e.g., by changing to CacheFirst.
   new StaleWhileRevalidate({
     cacheName: 'images',
@@ -78,3 +79,18 @@ self.addEventListener('message', (event) => {
 });
 
 // Any other custom service worker logic can go here.
+self.addEventListener('push', (e) => {
+  let body;
+  if (e.data) {
+    body = e.data.text();
+  } else {
+    body = 'Push message no payload';
+  }
+
+  var options = {
+    body: body,
+    icon: 'images/logo.png',
+    vibrate: [100, 50, 100],
+  };
+  e.waitUntil(self.registration.showNotification('WINIETY', options));
+});

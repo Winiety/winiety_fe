@@ -2,6 +2,12 @@ import { Container, CssBaseline, Button } from '@material-ui/core';
 import { apiEndpoints, useAxios } from 'api';
 import React, { ReactElement, useEffect } from 'react';
 import { useStoreActions, useStoreState } from 'store';
+import {
+  checkSupport,
+  displayNotification,
+  requestNotificationPermission,
+  subscribeUser,
+} from 'utils';
 import useStyles from './styles';
 
 const Home = (): ReactElement => {
@@ -25,6 +31,14 @@ const Home = (): ReactElement => {
     };
     method();
   }, [axios]);
+
+  useEffect(() => {
+    const registerNotifications = async () => {
+      if (!checkSupport()) return;
+      if (!requestNotificationPermission()) return;
+    };
+    registerNotifications();
+  }, []);
 
   return (
     <Container component="main" maxWidth="xs">
