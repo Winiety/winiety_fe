@@ -40,7 +40,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "yarn eslint 'src/**/*.ts{,x}'",
+    "lint": "yarn eslint src/**/*.ts{,x}",
     "lint:fix": "yarn lint --fix",
     "format": "prettier --write src/**/*.ts{,x}"
   },
