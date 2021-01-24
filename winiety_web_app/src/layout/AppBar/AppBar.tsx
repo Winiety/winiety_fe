@@ -7,12 +7,15 @@ import {
 } from '@material-ui/core';
 import { useStoreActions, useStoreState } from 'store';
 import React, { ReactElement } from 'react';
+import routes from 'routes';
+import { useHistory } from 'react-router-dom';
 import { AuthMenu } from './modules';
 
 import useStyles from './useStyles';
 
 const AppBarComp = (): ReactElement => {
   const classes = useStyles();
+  const history = useHistory();
 
   const changeTheme = useStoreActions(
     (actions) => actions.userSettings.changeTheme
@@ -28,10 +31,21 @@ const AppBarComp = (): ReactElement => {
     changeTheme(event.target.checked);
   };
 
+  const handleHomeRedirect = () => {
+    history.push(routes.home);
+  };
+
   return (
     <div className={classes.root}>
       <AppBar position="fixed">
         <Toolbar>
+          <img
+            className={classes.logo}
+            src="/images/logo.png"
+            alt="Winiety logo"
+            onClick={handleHomeRedirect}
+            role="presentation"
+          />
           <Typography variant="h6" className={classes.title}>
             WINIETY
           </Typography>
