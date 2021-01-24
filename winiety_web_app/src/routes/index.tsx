@@ -6,6 +6,7 @@ import NotFound from './NotFound';
 import SigninOidc from './SignInOidc';
 import SignoutOidc from './SignOutOidc';
 import Rides from './Rides';
+import Fines from './Fines';
 import UserProfile from './UserProfile/UserProfile';
 
 export const appRoutes = {
@@ -13,6 +14,7 @@ export const appRoutes = {
   signIn: '/sign-in',
   signOut: '/sign-out',
   rides: '/rides',
+  fines: '/fines',
   userProfile: '/profile',
 };
 
@@ -25,6 +27,11 @@ export const RoutedContent = (): ReactElement => {
       <AuthRoute
         path={appRoutes.rides}
         Component={Rides}
+        requiredRoles={['user']}
+      />
+      <AuthRoute
+        path={appRoutes.fines}
+        Component={Fines}
         requiredRoles={['user']}
       />
       <Route path={appRoutes.userProfile} exact component={UserProfile} />
