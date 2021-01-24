@@ -1,6 +1,5 @@
 import { action, Action } from 'easy-peasy';
 import { signInRedirect, signOutRedirect } from 'services/userService';
-import setAuthHeader from 'utils/axiosHeader';
 
 export interface UserSessionModel {
   isAuthenticated: boolean;
@@ -30,7 +29,6 @@ const userSessionModel: UserSessionModel = {
     /* TODO Roles assignment */
     // eslint-disable-next-line no-param-reassign
     state.role = 'user';
-    setAuthHeader(accessToken);
   }),
   logout: action((state) => {
     // eslint-disable-next-line no-param-reassign

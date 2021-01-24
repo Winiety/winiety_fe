@@ -1,1 +1,1 @@
-export default 'temp';
+export type { BaseResponse, Error } from './BaseResponse';
