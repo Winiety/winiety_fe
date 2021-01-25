@@ -3,16 +3,16 @@ import React, { ReactElement, useState } from 'react';
 import { TabPanel } from 'components';
 import SwipeableViews from 'react-swipeable-views';
 import useStyles from './use-styles';
-import { FinesTab } from './Tabs';
+import { FinesTab, RidesTab } from './Tabs';
 
 enum TabType {
-  FINES,
   RIDES,
+  FINES,
 }
 
 const Fines = (): ReactElement => {
   const classes = useStyles();
-  const [activeTab, setActiveTab] = useState<TabType>(TabType.FINES);
+  const [activeTab, setActiveTab] = useState<TabType>(TabType.RIDES);
 
   const theme = useTheme();
   const matchesSmall = useMediaQuery(theme.breakpoints.up('sm'));
@@ -40,8 +40,8 @@ const Fines = (): ReactElement => {
           centered
           aria-label="full width tabs example"
         >
+          <Tab label="Lista wykroczeń" />
           <Tab label="Wystawione mandaty" />
-          <Tab label="Podejrzane przejazdy" />
         </Tabs>
       </Paper>
       <SwipeableViews
@@ -51,12 +51,12 @@ const Fines = (): ReactElement => {
         className={classes.views}
         resistance
       >
-        <TabPanel className={classes.panel} index={TabType.FINES}>
+        <TabPanel className={classes.panel} index={TabType.RIDES}>
+          <RidesTab />
+        </TabPanel>
+        <TabPanel index={TabType.FINES}>
           <FinesTab />
         </TabPanel>
-        {/* <TabPanel index={TabType.CARS}>
-          <CarsTab />
-        </TabPanel> */}
       </SwipeableViews>
     </div>
   );

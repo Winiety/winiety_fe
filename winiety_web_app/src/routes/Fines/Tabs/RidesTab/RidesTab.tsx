@@ -1,4 +1,6 @@
 import {
+  Button,
+  IconButton,
   Paper,
   Table,
   TableBody,
@@ -8,20 +10,22 @@ import {
   TablePagination,
   TableRow,
 } from '@material-ui/core';
-import React, { ReactElement } from 'react';
-import fineGenerator from '../../generators/fine-generator';
+import React, { ReactElement, useState } from 'react';
+import rideGenerator from '../../generators/ride-generator';
 import useStyles from './use-styles';
+import { AddFineModal } from './Modals';
 
 interface CarsTabProps {
   className?: string;
 }
-const fines = Array.from(Array(12), () => fineGenerator());
+const fines = Array.from(Array(12), () => rideGenerator());
 
-const FinesTab = (props: CarsTabProps): ReactElement => {
+const RidesTab = (props: CarsTabProps): ReactElement => {
   const { className } = props;
   const classes = useStyles();
 
   const [page, setPage] = React.useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -34,6 +38,9 @@ const FinesTab = (props: CarsTabProps): ReactElement => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
+  const handleModalOpen = () => setIsModalOpen(true);
+  const handleModalClose = () => setIsModalOpen(false);
 
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, fines.length - page * rowsPerPage);
@@ -48,22 +55,28 @@ const FinesTab = (props: CarsTabProps): ReactElement => {
         >
           <TableHead>
             <TableRow>
-              <TableCell>Numer rejestracyjny</TableCell>
-              <TableCell>Opis mandatu</TableCell>
-              <TableCell>Wysokość mandatu</TableCell>
-              <TableCell>Data wystawienia</TableCell>
+              <TableCell width="10%" />
+              <TableCell width="10%">Czas przejazdu</TableCell>
+              <TableCell width="10%">Numer rejestracyjny</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {fines
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => (
-                <TableRow key={row.id}>
-                  <TableCell>{row.plateNumber}</TableCell>
-                  <TableCell>{row.description}</TableCell>
-                  <TableCell>{row.cost} PLN</TableCell>
+                <TableRow key={row.plateNumber}>
+                  <TableCell>
+                    <Button
+                      onClick={handleModalOpen}
+                      variant="contained"
+                      color="primary"
+                    >
+                      Wystaw mandat
+                    </Button>
+                  </TableCell>
+                  <TableCell>{row.rideDateTime} minut</TableCell>
                   <TableCell component="th" scope="row">
-                    {row.createTime}
+                    {row.plateNumber}
                   </TableCell>
                 </TableRow>
               ))}
@@ -86,8 +99,9 @@ const FinesTab = (props: CarsTabProps): ReactElement => {
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
+      <AddFineModal open={isModalOpen} handleClose={handleModalClose} />
     </div>
   );
 };
 
-export default FinesTab;
+export default RidesTab;

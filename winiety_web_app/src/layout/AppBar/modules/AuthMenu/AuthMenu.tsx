@@ -58,7 +58,6 @@ const AuthMenu = (): ReactElement => {
         onClose={handleClose}
       >
         <MenuItem onClick={handleProfileClick}>Profil</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
         <MenuItem onClick={handleLogout}>Wyloguj</MenuItem>
       </Menu>
     </div>
