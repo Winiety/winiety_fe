@@ -5,11 +5,11 @@ export interface UserRide {
   rideDateTime: number;
 }
 
-const getComplaint = (): UserRide => {
+const getRide = (): UserRide => {
   return {
     plateNumber: faker.vehicle.vin().slice(0, 5),
     rideDateTime: faker.random.number(50),
   };
 };
 
-export default getComplaint;
+export default getRide;

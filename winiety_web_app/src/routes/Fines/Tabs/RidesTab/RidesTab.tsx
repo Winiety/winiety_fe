@@ -25,6 +25,7 @@ const RidesTab = (props: CarsTabProps): ReactElement => {
   const classes = useStyles();
 
   const [page, setPage] = React.useState(0);
+  const [rideId, setRideId] = React.useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -39,7 +40,10 @@ const RidesTab = (props: CarsTabProps): ReactElement => {
     setPage(0);
   };
 
-  const handleModalOpen = () => setIsModalOpen(true);
+  const handleModalOpen = (id: number) => {
+    setIsModalOpen(true);
+    setRideId(id);
+  };
   const handleModalClose = () => setIsModalOpen(false);
 
   const emptyRows =
@@ -67,7 +71,7 @@ const RidesTab = (props: CarsTabProps): ReactElement => {
                 <TableRow key={row.plateNumber}>
                   <TableCell>
                     <Button
-                      onClick={handleModalOpen}
+                      onClick={() => handleModalOpen(1)}
                       variant="contained"
                       color="primary"
                     >
@@ -99,7 +103,11 @@ const RidesTab = (props: CarsTabProps): ReactElement => {
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
-      <AddFineModal open={isModalOpen} handleClose={handleModalClose} />
+      <AddFineModal
+        open={isModalOpen}
+        handleClose={handleModalClose}
+        rideId={rideId}
+      />
     </div>
   );
 };
