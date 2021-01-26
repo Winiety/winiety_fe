@@ -81,6 +81,8 @@ self.addEventListener('message', (event) => {
 // Any other custom service worker logic can go here.
 self.addEventListener('push', (e) => {
   let body;
+  console.log(e);
+  
   if (e.data) {
     body = e.data.text();
   } else {
