@@ -22,13 +22,13 @@ export const useAxios = (): AxiosInstance => {
   instance.interceptors.response.use(
     async (response) => {
       const res = response as AxiosResponse<BaseResponse<any>>;
-      res.data = res.data.result;
+      res.data = res.data?.result;
       return res;
     },
     (error) => {
       const err = error;
       if (err.response) {
-        err.response.data = err.response.data.errors;
+        err.response.data = err.response.data?.errors;
       }
       return Promise.reject(err);
     }

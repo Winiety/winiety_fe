@@ -22,17 +22,40 @@ const Rides = (): ReactElement => {
 
       const sub = await getSubscription();
       if (sub) {
-        return;
+        try {
+          await axios.post(
+            `${apiEndpoints.notification}/notification/register`,
+            {
+              endpoint: sub.endpoint,
+              p256dh: new Uint8Array(
+                sub.getKey('p256dh') as ArrayBuffer
+              ).reduce((data, byte) => data + String.fromCharCode(byte), ''),
+              auth: new Uint8Array(sub.getKey('auth') as ArrayBuffer).reduce(
+                (data, byte) => data + String.fromCharCode(byte),
+                ''
+              ),
+            }
+          );
+          return;
+        } catch (error) {
+          console.log(error);
+        }
       }
       const {
         data: { publicKey },
-      } = await axios.get(`${apiEndpoints.notification}/`);
+      } = await axios.get(`${apiEndpoints.notification}/notification/key`);
       const newSub = await subscribeUser(publicKey);
       if (!newSub) return;
-      await axios.post(apiEndpoints.notification, {
+      await axios.post(`${apiEndpoints.notification}/notification/register`, {
         endpoint: newSub.endpoint,
-        p256dh: newSub.getKey('p256dh'),
-        auth: newSub.getKey('auth'),
+        p256dh: new Uint8Array(newSub.getKey('p256dh') as ArrayBuffer).reduce(
+          (data, byte) => data + String.fromCharCode(byte),
+          ''
+        ),
+        auth: new Uint8Array(newSub.getKey('auth') as ArrayBuffer).reduce(
+          (data, byte) => data + String.fromCharCode(byte),
+          ''
+        ),
       });
     };
 
