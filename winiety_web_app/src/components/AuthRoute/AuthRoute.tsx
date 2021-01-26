@@ -1,6 +1,6 @@
 import React from 'react';
 import { RouteComponentProps, Route, Redirect } from 'react-router-dom';
-import { useStoreState } from 'store';
+import { useStoreActions, useStoreState } from 'store';
 import routes from 'routes';
 
 interface Props {
@@ -19,9 +19,14 @@ const AuthRoute = ({
   const isAuthenticated = useStoreState(
     (state) => state.userSession.isAuthenticated
   );
+  const loggedIn = useStoreActions((actions) => actions.userSession.loggedIn);
+  loggedIn();
 
-  const role = useStoreState((state) => state.userSession.role);
-  const userHasRequiredRole = requiredRoles.includes(role);
+  const roles = useStoreState((state) => state.userSession.role);
+  const userHasRequiredRole = roles.some((role) =>
+    requiredRoles.includes(role)
+  );
+
   const message = userHasRequiredRole
     ? 'Please log in to view this page'
     : "You can't be here!";
