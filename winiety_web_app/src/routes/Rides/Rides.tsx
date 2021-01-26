@@ -10,6 +10,17 @@ import {
 } from 'utils';
 import useStyles from './styles';
 
+const arrayBufferToBase64 = (buffer: ArrayBuffer | null) => {
+  if (!buffer) return '';
+  let binary = '';
+  const bytes = new Uint8Array(buffer);
+  const len = bytes.byteLength;
+  for (let i = 0; i < len; i += 1) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return window.btoa(binary);
+};
+
 const Rides = (): ReactElement => {
   const classes = useStyles();
   const axios = useAxios();
@@ -27,13 +38,8 @@ const Rides = (): ReactElement => {
             `${apiEndpoints.notification}/notification/register`,
             {
               endpoint: sub.endpoint,
-              p256dh: new Uint8Array(
-                sub.getKey('p256dh') as ArrayBuffer
-              ).reduce((data, byte) => data + String.fromCharCode(byte), ''),
-              auth: new Uint8Array(sub.getKey('auth') as ArrayBuffer).reduce(
-                (data, byte) => data + String.fromCharCode(byte),
-                ''
-              ),
+              p256dh: arrayBufferToBase64(sub.getKey('p256dh')),
+              auth: arrayBufferToBase64(sub.getKey('auth')),
             }
           );
           return;
@@ -48,14 +54,8 @@ const Rides = (): ReactElement => {
       if (!newSub) return;
       await axios.post(`${apiEndpoints.notification}/notification/register`, {
         endpoint: newSub.endpoint,
-        p256dh: new Uint8Array(newSub.getKey('p256dh') as ArrayBuffer).reduce(
-          (data, byte) => data + String.fromCharCode(byte),
-          ''
-        ),
-        auth: new Uint8Array(newSub.getKey('auth') as ArrayBuffer).reduce(
-          (data, byte) => data + String.fromCharCode(byte),
-          ''
-        ),
+        p256dh: arrayBufferToBase64(newSub.getKey('p256dh')),
+        auth: arrayBufferToBase64(newSub.getKey('auth')),
       });
     };
 
