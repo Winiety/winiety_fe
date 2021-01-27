@@ -1,4 +1,4 @@
-import { Container, CssBaseline, Button } from '@material-ui/core';
+import { Container, CssBaseline, Button, Typography } from '@material-ui/core';
 import { apiEndpoints, useAxios } from 'api';
 import React, { ReactElement, useEffect } from 'react';
 import { useStoreActions, useStoreState } from 'store';
@@ -35,7 +35,8 @@ const Home = (): ReactElement => {
           alt="Winiety logo"
           className={classes.image}
         />
-        <h1>Winiety</h1>
+        <Typography variant="h1">Winiety</Typography>
+        <Typography variant="h2">Elo!</Typography>
         {!isAuthenticated && (
           <Button
             type="button"
