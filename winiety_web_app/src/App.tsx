@@ -1,17 +1,24 @@
 import React, { ReactElement } from 'react';
 import { RoutedContent } from 'routes';
-import { CssBaseline, MuiThemeProvider } from '@material-ui/core';
-import { dark } from 'themes';
+import { CssBaseline } from '@material-ui/core';
+import { useStoreRehydrated } from 'easy-peasy';
 import { BrowserRouter } from 'react-router-dom';
+import Layout from 'layout';
 
 const App = (): ReactElement => {
+  const isRehydrated = useStoreRehydrated();
+
   return (
-    <MuiThemeProvider theme={dark}>
-      <CssBaseline />
+    <>
       <BrowserRouter>
-        <RoutedContent />
+        <Layout>
+          <>
+            <CssBaseline />
+            {isRehydrated ? <RoutedContent /> : <div>Ładowanie...</div>}
+          </>
+        </Layout>
       </BrowserRouter>
-    </MuiThemeProvider>
+    </>
   );
 };
 
