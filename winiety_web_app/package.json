@@ -15,6 +15,7 @@
     "axios": "^0.21.1",
     "classnames": "^2.2.6",
     "easy-peasy": "^4.0.1",
+    "jwt-decode": "^3.1.2",
     "oidc-client": "^1.10.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
