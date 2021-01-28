@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { useStoreState } from 'store';
-import { BaseResponse } from 'types';
 import { useMemo } from 'react';
+import { BaseResponse } from './types';
 
 const serverOrigin = process.env.REACT_APP_SERVER_ORIGIN;
 
