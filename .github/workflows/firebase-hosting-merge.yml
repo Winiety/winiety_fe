@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: cd winiety_web_app && yarn && yarn build
+      - run: cd winiety_web_app && yarn && CI=false yarn build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           entryPoint: "./winiety_web_app"
