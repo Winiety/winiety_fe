@@ -17,7 +17,7 @@ const Fines = (): ReactElement => {
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [getData, data] = FineRepository.useGetAllFines(console.error);
+  const [getData, data] = FineRepository.useGetAllFines();
 
   useEffect(() => {
     getData({ pageNumber: page + 1, pageSize: rowsPerPage });
