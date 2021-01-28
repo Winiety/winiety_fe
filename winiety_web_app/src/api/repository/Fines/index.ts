@@ -1,6 +1,5 @@
 import { useAxios, apiEndpoints } from 'api';
 import {
-  BasePageResponse,
   Error,
   Fine,
   FineDetailResponse,
@@ -9,7 +8,7 @@ import {
 } from 'api/types';
 import { PagedData } from 'api/types/BaseResponse';
 import { AxiosError } from 'axios';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 const usePostFine = (
   onError?: (error: AxiosError<Error>) => void
