@@ -1,6 +1,14 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import AuthRoute from 'components/AuthRoute';
+import {
+  arrayBufferToBase64,
+  displayNotification,
+  getSubscription,
+  subscribeUser,
+} from 'utils';
+import { useStoreState } from 'store';
+import { NotificationRepository } from 'api/repository';
 import Home from './Home';
 import NotFound from './NotFound';
 import SigninOidc from './SignInOidc';
@@ -20,7 +28,47 @@ export const appRoutes = {
   userProfile: '/profile',
 };
 
+const onError = () =>
+  displayNotification('Błąd', 'Wystąpił błąd podczas łączeniem z serwerem');
+
 export const RoutedContent = (): ReactElement => {
+  const isAuthenticated = useStoreState(
+    (state) => state.userSession.isAuthenticated
+  );
+
+  const getKey = NotificationRepository.useGetKeyLazy();
+  const postSubscription = NotificationRepository.usePostNotificationSubscription(
+    onError
+  );
+
+  useEffect(() => {
+    if (!isAuthenticated) return;
+    const inner = async () => {
+      let sub: PushSubscription | null | undefined = await getSubscription();
+      if (!sub) {
+        const key = await getKey();
+        if (!key) {
+          onError();
+          return;
+        }
+        sub = await subscribeUser(key);
+      }
+      if (!sub) {
+        displayNotification(
+          'Błąd',
+          'Wystąpił błąd podczas subskrypcji notyfikacji. Spróbuj przeładować stronę'
+        );
+        return;
+      }
+      await postSubscription({
+        endpoint: sub.endpoint,
+        p256dh: arrayBufferToBase64(sub.getKey('p256dh')),
+        auth: arrayBufferToBase64(sub.getKey('auth')),
+      });
+    };
+    inner();
+  }, [getKey, isAuthenticated, postSubscription]);
+
   return (
     <Switch>
       <Route path={appRoutes.signIn} component={SigninOidc} />

@@ -1,5 +1,6 @@
 import { Container, CssBaseline } from '@material-ui/core';
 import React, { ReactElement } from 'react';
+
 import useStyles from './styles';
 
 const Rides = (): ReactElement => {

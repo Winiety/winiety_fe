@@ -3,6 +3,7 @@ import { signInRedirectCallback } from 'services/userService';
 import { useHistory } from 'react-router-dom';
 import { useStoreActions } from 'store';
 import routes from 'routes';
+import { displayNotification } from 'utils';
 import useStyles from './styles';
 
 const SignInOidc = (): ReactElement => {
@@ -16,6 +17,7 @@ const SignInOidc = (): ReactElement => {
       if (accessToken !== '') {
         login(accessToken);
       }
+      displayNotification('WINIETY', 'Witaj w winietach!');
       history.push(routes.rides);
     };
     signInAsync();

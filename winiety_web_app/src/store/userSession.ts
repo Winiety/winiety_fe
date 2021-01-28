@@ -1,6 +1,7 @@
 import { action, Action } from 'easy-peasy';
 import { signInRedirect, signOutRedirect } from 'services/userService';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
+import { displayNotification } from 'utils';
 
 export interface UserSessionModel {
   isAuthenticated: boolean;
@@ -52,6 +53,7 @@ const userSessionModel: UserSessionModel = {
       // eslint-disable-next-line no-param-reassign
       state.role = [userData.role].flat();
     }
+    displayNotification('WINIETY', 'Witaj w winietach!');
   }),
   logout: action((state) => {
     // eslint-disable-next-line no-param-reassign
