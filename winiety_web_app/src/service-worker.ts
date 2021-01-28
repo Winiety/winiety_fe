@@ -84,9 +84,9 @@ self.addEventListener('push', (e) => {
   console.log(e);
   
   if (e.data) {
-    body = e.data.text();
+    body = JSON.parse(e.data.text())['Content'];
   } else {
-    body = 'Push message no payload';
+    body = 'Push message has no payload';
   }
 
   var options = {

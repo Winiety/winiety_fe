@@ -1,6 +1,7 @@
 import { action, Action } from 'easy-peasy';
 import { signInRedirect, signOutRedirect } from 'services/userService';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
+import { displayNotification } from 'utils';
 
 export interface UserSessionModel {
   isAuthenticated: boolean;
@@ -20,7 +21,6 @@ const userSessionModel: UserSessionModel = {
   loggedIn: action((state) => {
     if (state.accessToken) {
       const token = jwtDecode<JwtPayload>(state.accessToken);
-      console.log(token);
       if (token?.exp) {
         if (token?.exp < Date.now() / 1000) {
           // eslint-disable-next-line no-param-reassign
@@ -47,6 +47,7 @@ const userSessionModel: UserSessionModel = {
     const jToken = JSON.parse(JSON.stringify(userData));
     // eslint-disable-next-line no-param-reassign
     state.role = [jToken.role].flat();
+    displayNotification('WINIETY', 'Witaj w winietach!');
   }),
   logout: action((state) => {
     // eslint-disable-next-line no-param-reassign

@@ -41,11 +41,8 @@ export const getSubscription = async (): Promise<
   if ('serviceWorker' in navigator) {
     const worker = await navigator.serviceWorker.getRegistration();
     const sub = await worker?.pushManager.getSubscription();
-    if (!sub) {
-      // eslint-disable-next-line no-console
-      console.error('Not subscribed to push service!');
-      return null;
-    }
+    if (!sub) return null;
+
     return sub;
   }
   return null;
@@ -88,4 +85,15 @@ export const subscribeUser = async (
     }
   }
   return sub;
+};
+
+export const arrayBufferToBase64 = (buffer: ArrayBuffer | null): string => {
+  if (!buffer) throw Error('No array buffer!');
+  let binary = '';
+  const bytes = new Uint8Array(buffer);
+  const len = bytes.byteLength;
+  for (let i = 0; i < len; i += 1) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return window.btoa(binary);
 };
