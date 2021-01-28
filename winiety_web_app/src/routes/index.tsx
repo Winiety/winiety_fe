@@ -14,12 +14,18 @@ import NotFound from './NotFound';
 import SigninOidc from './SignInOidc';
 import SignoutOidc from './SignOutOidc';
 import Rides from './Rides';
+import Fines from './Fines';
+import Offenses from './Offenses';
+import UserProfile from './UserProfile/UserProfile';
 
-const appRoutes = {
+export const appRoutes = {
   home: '/',
   signIn: '/sign-in',
   signOut: '/sign-out',
   rides: '/rides',
+  fines: '/fines',
+  offenses: '/offenses',
+  userProfile: '/profile',
 };
 
 const onError = () =>
@@ -71,6 +77,21 @@ export const RoutedContent = (): ReactElement => {
       <AuthRoute
         path={appRoutes.rides}
         Component={Rides}
+        requiredRoles={['user']}
+      />
+      <AuthRoute
+        path={appRoutes.fines}
+        Component={Fines}
+        requiredRoles={['police']}
+      />
+      <AuthRoute
+        path={appRoutes.offenses}
+        Component={Offenses}
+        requiredRoles={['police']}
+      />
+      <AuthRoute
+        path={appRoutes.userProfile}
+        Component={UserProfile}
         requiredRoles={['user']}
       />
       <Route component={NotFound} />

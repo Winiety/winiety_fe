@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { useStoreState } from 'store';
-import { BaseResponse } from 'types';
+import { BaseResponse } from 'api/types';
 import { useMemo } from 'react';
 
 const serverOrigin = process.env.REACT_APP_SERVER_ORIGIN;
@@ -26,9 +26,13 @@ export const useAxios = (): AxiosInstance => {
 
   instance.interceptors.response.use(
     async (response) => {
-      const res = response as AxiosResponse<BaseResponse<any>>;
-      res.data = res.data?.result;
-      return res;
+      if (response.data?.result) {
+        const res = response as AxiosResponse<BaseResponse<any>>;
+        res.data = res.data.result;
+        return res;
+      }
+
+      return response;
     },
     (error) => {
       const err = error;
