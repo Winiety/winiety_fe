@@ -54,6 +54,7 @@
         "singleQuote": true
       }
     ],
-    "react/require-default-props": "off"
+    "react/require-default-props": "off",
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
   }
 }

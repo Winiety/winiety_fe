@@ -1,42 +1,67 @@
 import { action, Action } from 'easy-peasy';
 import { signInRedirect, signOutRedirect } from 'services/userService';
+import jwtDecode, { JwtPayload } from 'jwt-decode';
+import { displayNotification } from 'utils';
 
 export interface UserSessionModel {
   isAuthenticated: boolean;
-  accessToken: string;
-  role: string;
+  accessToken: string | null;
+  role: string[];
+  loggedIn: Action<UserSessionModel>;
   initiateLogin: Action<UserSessionModel>;
   initiateLogout: Action<UserSessionModel>;
   login: Action<UserSessionModel, string>;
   logout: Action<UserSessionModel>;
 }
 
+interface CustomJwtPayload extends JwtPayload {
+  role?: string[] | string;
+}
+
 const userSessionModel: UserSessionModel = {
   isAuthenticated: false,
-  accessToken: '',
-  role: 'guest',
+  accessToken: null,
+  role: [],
+  loggedIn: action((state) => {
+    if (state.accessToken) {
+      const token = jwtDecode<CustomJwtPayload>(state.accessToken);
+      if (token?.exp) {
+        if (token?.exp < Date.now() / 1000) {
+          // eslint-disable-next-line no-param-reassign
+          state.isAuthenticated = false;
+          // eslint-disable-next-line no-param-reassign
+          state.accessToken = null;
+          // eslint-disable-next-line no-param-reassign
+          state.role = [];
+        }
+      }
+    }
+  }),
   initiateLogin: action(() => {
     signInRedirect();
   }),
   initiateLogout: action(() => {
     signOutRedirect();
   }),
-  login: action((state, accessToken) => {
+  login: action((state, token) => {
     // eslint-disable-next-line no-param-reassign
     state.isAuthenticated = true;
     // eslint-disable-next-line no-param-reassign
-    state.accessToken = accessToken;
-    /* TODO Roles assignment */
-    // eslint-disable-next-line no-param-reassign
-    state.role = 'user';
+    state.accessToken = token;
+    const userData = jwtDecode<CustomJwtPayload>(token);
+    if (userData?.role) {
+      // eslint-disable-next-line no-param-reassign
+      state.role = [userData.role].flat();
+    }
+    displayNotification('WINIETY', 'Witaj w winietach!');
   }),
   logout: action((state) => {
     // eslint-disable-next-line no-param-reassign
     state.isAuthenticated = false;
     // eslint-disable-next-line no-param-reassign
-    state.accessToken = '';
+    state.accessToken = null;
     // eslint-disable-next-line no-param-reassign
-    state.role = 'guest';
+    state.role = [];
   }),
 };
 

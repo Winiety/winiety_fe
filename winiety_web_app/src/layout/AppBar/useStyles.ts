@@ -11,5 +11,10 @@ export default makeStyles((theme: Theme) =>
     title: {
       flexGrow: 1,
     },
+    logo: {
+      width: 40,
+      marginRight: theme.spacing(1),
+      cursor: 'pointer',
+    },
   })
 );
