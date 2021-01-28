@@ -40,7 +40,10 @@ const Offenses = (): ReactElement => {
     }
   }, [getData, page, rowsPerPage, speed]);
 
-  const handleChangePage = (event: unknown, newPage: number) => {
+  const handleChangePage = (
+    _event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
+    newPage: number
+  ) => {
     setPage(newPage);
   };
 
@@ -63,10 +66,6 @@ const Offenses = (): ReactElement => {
   ) => {
     setSpeed(event.target.value);
   };
-
-  const emptyRows =
-    rowsPerPage -
-    Math.min(rowsPerPage, (data?.totalCount || 0) - page * rowsPerPage);
 
   return (
     <div className={classes.root}>
@@ -114,11 +113,6 @@ const Offenses = (): ReactElement => {
                 <TableCell>{row.rideDateTime}</TableCell>
               </TableRow>
             ))}
-            {emptyRows > 0 && (
-              <TableRow style={{ height: 50 * emptyRows }}>
-                <TableCell colSpan={3} />
-              </TableRow>
-            )}
           </TableBody>
         </Table>
       </TableContainer>

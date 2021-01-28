@@ -33,10 +33,6 @@ const Fines = (): ReactElement => {
     setRowsPerPage(parseInt(event.target.value, 10));
   };
 
-  const emptyRows =
-    rowsPerPage -
-    Math.min(rowsPerPage, (data?.totalCount || 0) - page * rowsPerPage);
-
   return (
     <div className={classes.root}>
       <TableContainer component={Paper}>
@@ -65,11 +61,6 @@ const Fines = (): ReactElement => {
                 </TableCell>
               </TableRow>
             ))}
-            {emptyRows > 0 && (
-              <TableRow style={{ height: 50 * emptyRows }}>
-                <TableCell colSpan={3} />
-              </TableRow>
-            )}
           </TableBody>
         </Table>
       </TableContainer>

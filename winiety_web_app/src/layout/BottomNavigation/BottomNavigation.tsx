@@ -12,17 +12,13 @@ const BottomNavigationComp = (props: Props): ReactElement => {
 
   const role = useStoreState((state) => state.userSession.role);
 
-  const bottomMenu = () => {
-    if (role.includes('police')) {
-      return <BottomPoliceNavigation className={className} />;
-    }
-    if (role.includes('user')) {
-      return <BottomUserNavigation className={className} />;
-    }
-    return <></>;
-  };
+  if (role.includes('police'))
+    return <BottomPoliceNavigation className={className} />;
 
-  return <>{bottomMenu()}</>;
+  if (role.includes('user'))
+    return <BottomUserNavigation className={className} />;
+
+  return <></>;
 };
 
 export default BottomNavigationComp;
