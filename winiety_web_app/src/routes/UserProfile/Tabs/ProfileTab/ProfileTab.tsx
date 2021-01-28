@@ -55,6 +55,7 @@ const ProfileTab = (props: ProfileTabProps): ReactElement => {
 
   return (
     <form
+      // eslint-disable-next-line no-console
       onSubmit={handleSubmit(console.log)}
       className={classNames(className, classes.root)}
     >

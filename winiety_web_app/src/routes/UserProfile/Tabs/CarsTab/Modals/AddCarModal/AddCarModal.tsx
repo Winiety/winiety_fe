@@ -33,52 +33,55 @@ const AddCarModal = (props: AddCarModalProps): ReactElement => {
 
   return (
     <Modal title="Dodaj samochód" open={open} onClose={handleClose}>
-      <form onSubmit={handleSubmit(console.log)} className={classes.form}>
-        <TextField
-          error={!!errors.plateNumber}
-          helperText={errors.plateNumber?.message}
-          inputRef={register}
-          fullWidth
-          name="plateNumber"
-          label="Tablica rejestracyjna"
-        />
-        <TextField
-          error={!!errors.brand}
-          helperText={errors.brand?.message}
-          inputRef={register}
-          fullWidth
-          name="brand"
-          label="Marka"
-        />
-        <TextField
-          error={!!errors.model}
-          helperText={errors.model?.message}
-          inputRef={register}
-          fullWidth
-          name="model"
-          label="Model"
-        />
-        {/* TODO: Make a select */}
-        <TextField
-          error={!!errors.color}
-          helperText={errors.color?.message}
-          inputRef={register}
-          fullWidth
-          name="color"
-          label="Kolor"
-        />
-        <TextField
-          error={!!errors.year}
-          helperText={errors.year?.message}
-          inputRef={register}
-          fullWidth
-          name="year"
-          label="Rok produkcji"
-        />
-        <Button color="primary" variant="contained" type="submit" fullWidth>
-          Zapisz
-        </Button>
-      </form>
+      <>
+        {/* eslint-disable-next-line no-console */}
+        <form onSubmit={handleSubmit(console.log)} className={classes.form}>
+          <TextField
+            error={!!errors.plateNumber}
+            helperText={errors.plateNumber?.message}
+            inputRef={register}
+            fullWidth
+            name="plateNumber"
+            label="Tablica rejestracyjna"
+          />
+          <TextField
+            error={!!errors.brand}
+            helperText={errors.brand?.message}
+            inputRef={register}
+            fullWidth
+            name="brand"
+            label="Marka"
+          />
+          <TextField
+            error={!!errors.model}
+            helperText={errors.model?.message}
+            inputRef={register}
+            fullWidth
+            name="model"
+            label="Model"
+          />
+          {/* TODO: Make a select */}
+          <TextField
+            error={!!errors.color}
+            helperText={errors.color?.message}
+            inputRef={register}
+            fullWidth
+            name="color"
+            label="Kolor"
+          />
+          <TextField
+            error={!!errors.year}
+            helperText={errors.year?.message}
+            inputRef={register}
+            fullWidth
+            name="year"
+            label="Rok produkcji"
+          />
+          <Button color="primary" variant="contained" type="submit" fullWidth>
+            Zapisz
+          </Button>
+        </form>
+      </>
     </Modal>
   );
 };

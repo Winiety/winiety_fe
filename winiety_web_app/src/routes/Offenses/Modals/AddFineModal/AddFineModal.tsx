@@ -27,7 +27,7 @@ const formSchema: yup.SchemaOf<FineFormValues> = yup.object().shape({
 const AddFineModal = (props: AddFineModalProps): ReactElement => {
   const { open, handleClose } = props;
   const classes = useStyles();
-  const [postData, data] = FineRepository.usePostFine(console.error);
+  const [postData] = FineRepository.usePostFine();
 
   const { handleSubmit, register, errors } = useForm<FineFormValues>({
     resolver: yupResolver(formSchema),
