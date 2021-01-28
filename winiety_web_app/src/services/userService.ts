@@ -5,8 +5,12 @@ import {
   SignoutResponse,
 } from 'oidc-client';
 
+const authority = process.env.NODE_ENV.includes('development')
+  ? `${process.env.REACT_APP_SERVER_ORIGIN}:${process.env.REACT_APP_IDENTITY_PORT}`
+  : `${process.env.REACT_APP_IDENTITY_ORIGIN}`;
+
 const userServiceConfig: UserManagerSettings = {
-  authority: `${process.env.REACT_APP_SERVER_ORIGIN}:${process.env.REACT_APP_IDENTITY_PORT}`,
+  authority,
   client_id: 'react',
   redirect_uri: `${window.location.origin}/sign-in`,
   silent_redirect_uri: `${window.location.origin}/sign-in`,
