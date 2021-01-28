@@ -23,7 +23,7 @@ const Offenses = (): ReactElement => {
   const [speed, setSpeed] = React.useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [getData, data] = RideRepository.useGetAllRides(console.error);
+  const [getData, data] = RideRepository.useGetAllRides();
 
   useEffect(() => {
     if (speed) {
