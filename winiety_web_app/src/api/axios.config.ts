@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { useStoreState } from 'store';
-import { BaseResponse } from 'api/types';
+import { BasePageResponse, BaseResponse } from 'api/types';
+import { useMemo } from 'react';
 
 const serverOrigin = process.env.REACT_APP_SERVER_ORIGIN;
 
@@ -13,17 +14,25 @@ export const apiUrl = `${serverOrigin}:${gatewayPort}${gatewayBasePath}`;
 
 export const useAxios = (): AxiosInstance => {
   const authToken = useStoreState((store) => store.userSession.accessToken);
-  const instance = axios.create({
-    baseURL: apiUrl,
-    responseType: 'json',
-    headers: { Authorization: `Bearer ${authToken}` },
-  });
+  const instance = useMemo(
+    () =>
+      axios.create({
+        baseURL: apiUrl,
+        responseType: 'json',
+        headers: { Authorization: `Bearer ${authToken}` },
+      }),
+    [authToken]
+  );
 
   instance.interceptors.response.use(
     async (response) => {
-      const res = response as AxiosResponse<BaseResponse<any>>;
-      res.data = res.data.result;
-      return res;
+      if (response.data?.result) {
+        const res = response as AxiosResponse<BaseResponse<any>>;
+        res.data = res.data.result;
+        return res;
+      }
+
+      return response;
     },
     (error) => {
       const err = error;

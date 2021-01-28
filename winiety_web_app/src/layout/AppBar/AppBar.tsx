@@ -5,6 +5,7 @@ import {
   Switch,
   AppBar,
 } from '@material-ui/core';
+import Brightness2Icon from '@material-ui/icons/Brightness2';
 import { useStoreActions, useStoreState } from 'store';
 import React, { ReactElement } from 'react';
 import routes from 'routes';
@@ -57,7 +58,7 @@ const AppBarComp = (): ReactElement => {
                 aria-label="dark theme switch"
               />
             }
-            label="Ciemny motyw"
+            label={<Brightness2Icon />}
           />
           {isAuthenticated && <AuthMenu />}
         </Toolbar>

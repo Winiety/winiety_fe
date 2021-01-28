@@ -1,7 +1,15 @@
 import { useAxios, apiEndpoints } from 'api';
-import { Error, Fine, FinePostResponse } from 'api/types';
+import {
+  BasePageResponse,
+  Error,
+  Fine,
+  FineDetailResponse,
+  FinePostResponse,
+  RequestParams,
+} from 'api/types';
+import { PagedData } from 'api/types/BaseResponse';
 import { AxiosError } from 'axios';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 const usePostFine = (
   onError?: (error: AxiosError<Error>) => void
@@ -24,4 +32,31 @@ const usePostFine = (
   return [doPost, fineData];
 };
 
-export default { usePostFine };
+const useGetAllFines = (
+  onError?: (error: AxiosError<Error>) => void
+): [(params: RequestParams) => void, PagedData<FineDetailResponse> | null] => {
+  const axios = useAxios();
+  const [fines, setFines] = useState<PagedData<FineDetailResponse> | null>(
+    null
+  );
+
+  const doGet = useCallback(
+    (params: RequestParams) => {
+      axios
+        .get<PagedData<FineDetailResponse>>(`${apiEndpoints.fines}/fine`, {
+          params,
+        })
+        .then(({ data }) => {
+          setFines(data);
+        })
+        .catch((err) => {
+          if (onError) onError(err);
+        });
+    },
+    [axios, onError]
+  );
+
+  return [doGet, fines];
+};
+
+export default { usePostFine, useGetAllFines };

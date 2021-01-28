@@ -4,12 +4,13 @@ export interface Fine {
   description: string;
 }
 
-export interface FinePostResponse {
+export interface FinePostResponse extends Fine {
   id: number;
-  rideId: number;
   pictureId: number;
   plateNumber: string;
-  cost: number;
-  description: string;
   createTime: string;
+}
+
+export interface FineDetailResponse extends FinePostResponse {
+  userId: number;
 }

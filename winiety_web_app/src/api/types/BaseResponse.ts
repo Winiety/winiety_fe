@@ -4,6 +4,19 @@ export interface BaseResponse<T> {
   result: T;
 }
 
+export interface PagedData<T> {
+  pageSize: number;
+  currentPage: number;
+  totalPages: number;
+  totalCount: number;
+  results: T[];
+}
+
+export interface BasePageResponse<T> extends PagedData<T> {
+  isSuccess: boolean;
+  errors: Error[];
+}
+
 export interface Error {
   message: string;
 }

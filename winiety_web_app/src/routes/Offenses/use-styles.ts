@@ -8,8 +8,18 @@ export default makeStyles((theme: Theme) =>
       display: 'flex',
       flexDirection: 'column',
     },
+    paper: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
     table: {
       minWidth: 650,
+    },
+    textField: {
+      marginTop: theme.spacing(5),
+      marginBottom: theme.spacing(5),
+      width: 250,
     },
   })
 );

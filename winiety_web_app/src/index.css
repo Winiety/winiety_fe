@@ -43,3 +43,7 @@ hr.MuiDivider-root {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+.MuiTablePagination-root {
+  overflow: unset !important;
+}

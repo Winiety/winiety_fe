@@ -1,2 +1,6 @@
-export type { BaseResponse, Error } from './BaseResponse';
-export type { Fine, FinePostResponse } from './FineTypes';
+export type { BaseResponse, Error, BasePageResponse } from './BaseResponse';
+export type { Fine, FinePostResponse, FineDetailResponse } from './FineTypes';
+export type {
+  SearchRequest as RequestParams,
+  RideSearchRequest,
+} from './RequestParams';

@@ -17,8 +17,11 @@ interface AddFineModalProps {
 type FineFormValues = Omit<Fine, 'rideId'>;
 
 const formSchema: yup.SchemaOf<FineFormValues> = yup.object().shape({
-  cost: yup.number().required('Wysokość mandatu'),
-  description: yup.string().required('Opis mandatu'),
+  cost: yup
+    .number()
+    .positive('Wymagana liczba dodatnia')
+    .required('Wymagana wysokość mandatu'),
+  description: yup.string().required('Wymagany opis mandatu'),
 });
 
 const AddFineModal = (props: AddFineModalProps): ReactElement => {
@@ -35,6 +38,7 @@ const AddFineModal = (props: AddFineModalProps): ReactElement => {
     // eslint-disable-next-line no-param-reassign
     formData.rideId = props.rideId;
     postData(formData);
+    handleClose();
   };
 
   return (

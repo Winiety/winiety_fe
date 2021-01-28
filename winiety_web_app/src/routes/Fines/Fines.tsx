@@ -1,63 +1,89 @@
-import { Paper, Tab, Tabs, useMediaQuery, useTheme } from '@material-ui/core';
-import React, { ReactElement, useState } from 'react';
-import { TabPanel } from 'components';
-import SwipeableViews from 'react-swipeable-views';
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow,
+} from '@material-ui/core';
+import React, { ReactElement, useEffect } from 'react';
+import { FineRepository } from 'api/repository';
 import useStyles from './use-styles';
-import { FinesTab, RidesTab } from './Tabs';
-
-enum TabType {
-  RIDES,
-  FINES,
-}
 
 const Fines = (): ReactElement => {
   const classes = useStyles();
-  const [activeTab, setActiveTab] = useState<TabType>(TabType.RIDES);
 
-  const theme = useTheme();
-  const matchesSmall = useMediaQuery(theme.breakpoints.up('sm'));
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [getData, data] = FineRepository.useGetAllFines(console.error);
 
-  const handleChange = (
-    _event: React.ChangeEvent<unknown>,
-    newValue: number
+  useEffect(() => {
+    getData({ pageNumber: page + 1, pageSize: rowsPerPage });
+  }, [getData, page, rowsPerPage]);
+
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setActiveTab(newValue);
+    setRowsPerPage(parseInt(event.target.value, 10));
   };
 
-  const handleChangeIndex = (index: number) => {
-    setActiveTab(index);
-  };
+  const emptyRows =
+    rowsPerPage -
+    Math.min(rowsPerPage, (data?.totalCount || 0) - page * rowsPerPage);
 
   return (
     <div className={classes.root}>
-      <Paper square>
-        <Tabs
-          value={activeTab}
-          onChange={handleChange}
-          indicatorColor="primary"
-          textColor="primary"
-          variant={matchesSmall ? 'standard' : 'fullWidth'}
-          centered
-          aria-label="full width tabs example"
+      <TableContainer component={Paper}>
+        <Table
+          className={classes.table}
+          aria-label="simple table"
+          size="medium"
+          stickyHeader
         >
-          <Tab label="Lista wykroczeń" />
-          <Tab label="Wystawione mandaty" />
-        </Tabs>
-      </Paper>
-      <SwipeableViews
-        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-        index={activeTab}
-        onChangeIndex={handleChangeIndex}
-        className={classes.views}
-        resistance
-      >
-        <TabPanel className={classes.panel} index={TabType.RIDES}>
-          <RidesTab />
-        </TabPanel>
-        <TabPanel index={TabType.FINES}>
-          <FinesTab />
-        </TabPanel>
-      </SwipeableViews>
+          <TableHead>
+            <TableRow>
+              <TableCell>Numer rejestracyjny</TableCell>
+              <TableCell>Opis mandatu</TableCell>
+              <TableCell>Wysokość mandatu</TableCell>
+              <TableCell>Data wystawienia</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {((!!data && data.results) || []).map((row) => (
+              <TableRow key={row.id}>
+                <TableCell>{row.plateNumber}</TableCell>
+                <TableCell>{row.description}</TableCell>
+                <TableCell>{row.cost} PLN</TableCell>
+                <TableCell component="th" scope="row">
+                  {row.createTime}
+                </TableCell>
+              </TableRow>
+            ))}
+            {emptyRows > 0 && (
+              <TableRow style={{ height: 50 * emptyRows }}>
+                <TableCell colSpan={3} />
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <TablePagination
+        labelRowsPerPage=""
+        labelDisplayedRows={({ from, to, count }) => `${from}-${to} z ${count}`}
+        rowsPerPageOptions={[5, 10, 20]}
+        component="div"
+        count={data?.totalCount || 0}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onChangePage={handleChangePage}
+        onChangeRowsPerPage={handleChangeRowsPerPage}
+      />
     </div>
   );
 };

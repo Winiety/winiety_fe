@@ -13,21 +13,25 @@ export interface UserSessionModel {
   logout: Action<UserSessionModel>;
 }
 
+interface CustomJwtPayload extends JwtPayload {
+  role?: string[] | string;
+}
+
 const userSessionModel: UserSessionModel = {
   isAuthenticated: false,
   accessToken: null,
   role: [],
   loggedIn: action((state) => {
     if (state.accessToken) {
-      const token = jwtDecode<JwtPayload>(state.accessToken);
-      console.log(token);
+      const token = jwtDecode<CustomJwtPayload>(state.accessToken);
       if (token?.exp) {
         if (token?.exp < Date.now() / 1000) {
           // eslint-disable-next-line no-param-reassign
-          state.isAuthenticated = true;
-        } else {
-          // eslint-disable-next-line no-param-reassign
           state.isAuthenticated = false;
+          // eslint-disable-next-line no-param-reassign
+          state.accessToken = null;
+          // eslint-disable-next-line no-param-reassign
+          state.role = [];
         }
       }
     }
@@ -43,10 +47,11 @@ const userSessionModel: UserSessionModel = {
     state.isAuthenticated = true;
     // eslint-disable-next-line no-param-reassign
     state.accessToken = token;
-    const userData = jwtDecode<JwtPayload>(token);
-    const jToken = JSON.parse(JSON.stringify(userData));
-    // eslint-disable-next-line no-param-reassign
-    state.role = [jToken.role].flat();
+    const userData = jwtDecode<CustomJwtPayload>(token);
+    if (userData?.role) {
+      // eslint-disable-next-line no-param-reassign
+      state.role = [userData.role].flat();
+    }
   }),
   logout: action((state) => {
     // eslint-disable-next-line no-param-reassign

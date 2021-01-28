@@ -1,6 +1,5 @@
 import {
   Button,
-  IconButton,
   Paper,
   Table,
   TableBody,
@@ -9,25 +8,37 @@ import {
   TableHead,
   TablePagination,
   TableRow,
+  TextField,
 } from '@material-ui/core';
-import React, { ReactElement, useState } from 'react';
-import rideGenerator from '../../generators/ride-generator';
+import React, { ReactElement, useEffect, useState } from 'react';
+import { RideRepository } from 'api/repository';
 import useStyles from './use-styles';
 import { AddFineModal } from './Modals';
 
-interface CarsTabProps {
-  className?: string;
-}
-const fines = Array.from(Array(12), () => rideGenerator());
-
-const RidesTab = (props: CarsTabProps): ReactElement => {
-  const { className } = props;
+const Offenses = (): ReactElement => {
   const classes = useStyles();
 
   const [page, setPage] = React.useState(0);
   const [rideId, setRideId] = React.useState(0);
+  const [speed, setSpeed] = React.useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [getData, data] = RideRepository.useGetAllRides(console.error);
+
+  useEffect(() => {
+    if (speed) {
+      getData({
+        pageNumber: page + 1,
+        pageSize: rowsPerPage,
+        speedLimit: parseInt(speed, 10),
+      });
+    } else {
+      getData({
+        pageNumber: page + 1,
+        pageSize: rowsPerPage,
+      });
+    }
+  }, [getData, page, rowsPerPage, speed]);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -44,46 +55,65 @@ const RidesTab = (props: CarsTabProps): ReactElement => {
     setIsModalOpen(true);
     setRideId(id);
   };
+
   const handleModalClose = () => setIsModalOpen(false);
 
+  const handleChangeSpeedLimit = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setSpeed(event.target.value);
+  };
+
   const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, fines.length - page * rowsPerPage);
+    rowsPerPage -
+    Math.min(rowsPerPage, (data?.totalCount || 0) - page * rowsPerPage);
 
   return (
-    <div className={className}>
+    <div className={classes.root}>
+      <div className={classes.paper}>
+        <TextField
+          id="speed-limit"
+          label="Limit prędkości"
+          type="number"
+          value={speed}
+          onChange={handleChangeSpeedLimit}
+          className={classes.textField}
+        />
+      </div>
       <TableContainer component={Paper}>
         <Table
           className={classes.table}
           aria-label="simple table"
           size="medium"
+          stickyHeader
         >
           <TableHead>
             <TableRow>
               <TableCell width="10%" />
-              <TableCell width="10%">Czas przejazdu</TableCell>
+              <TableCell width="10%">Zmierzona prędkość</TableCell>
               <TableCell width="10%">Numer rejestracyjny</TableCell>
+              <TableCell width="10%">Czas przejazdu</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {fines
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => (
-                <TableRow key={row.plateNumber}>
-                  <TableCell>
-                    <Button
-                      onClick={() => handleModalOpen(1)}
-                      variant="contained"
-                      color="primary"
-                    >
-                      Wystaw mandat
-                    </Button>
-                  </TableCell>
-                  <TableCell>{row.rideDateTime} minut</TableCell>
-                  <TableCell component="th" scope="row">
-                    {row.plateNumber}
-                  </TableCell>
-                </TableRow>
-              ))}
+            {((!!data && data.results) || []).map((row) => (
+              <TableRow key={row.id}>
+                <TableCell>
+                  <Button
+                    onClick={() => handleModalOpen(row.id)}
+                    variant="contained"
+                    color="primary"
+                  >
+                    Wystaw mandat
+                  </Button>
+                </TableCell>
+                <TableCell>{row.speed} km/h</TableCell>
+                <TableCell component="th" scope="row">
+                  {row.plateNumber}
+                </TableCell>
+                <TableCell>{row.rideDateTime}</TableCell>
+              </TableRow>
+            ))}
             {emptyRows > 0 && (
               <TableRow style={{ height: 50 * emptyRows }}>
                 <TableCell colSpan={3} />
@@ -97,7 +127,7 @@ const RidesTab = (props: CarsTabProps): ReactElement => {
         labelDisplayedRows={({ from, to, count }) => `${from}-${to} z ${count}`}
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
-        count={fines.length}
+        count={data?.totalCount || 0}
         rowsPerPage={rowsPerPage}
         page={page}
         onChangePage={handleChangePage}
@@ -112,4 +142,4 @@ const RidesTab = (props: CarsTabProps): ReactElement => {
   );
 };
 
-export default RidesTab;
+export default Offenses;
