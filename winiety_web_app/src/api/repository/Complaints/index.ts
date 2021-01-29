@@ -67,4 +67,37 @@ const useGetAllComplaints = (
   return [doGet, complaints];
 };
 
-export default { usePostComplaint, useGetAllComplaints };
+const useGetUserComplaints = (
+  onError?: (error: AxiosError<Error>) => void
+): [
+  (params: RequestParams) => void,
+  PagedData<ComplaintPostResponse> | null
+] => {
+  const axios = useAxios();
+  const [complaints, setComplaints] = useState<PagedData<
+    ComplaintPostResponse
+  > | null>(null);
+
+  const doGet = useCallback(
+    (params: RequestParams) => {
+      axios
+        .get<PagedData<ComplaintPostResponse>>(
+          `${apiEndpoints.fines}/complaint/user`,
+          {
+            params,
+          }
+        )
+        .then(({ data }) => {
+          setComplaints(data);
+        })
+        .catch((err) => {
+          if (onError) onError(err);
+        });
+    },
+    [axios, onError]
+  );
+
+  return [doGet, complaints];
+};
+
+export default { usePostComplaint, useGetAllComplaints, useGetUserComplaints };

@@ -58,4 +58,29 @@ const useGetAllFines = (
   return [doGet, fines];
 };
 
-export default { usePostFine, useGetAllFines };
+const useGetUserFines = (
+  onError?: (error: AxiosError<Error>) => void
+): [(params: RequestParams) => void, PagedData<FinePostResponse> | null] => {
+  const axios = useAxios();
+  const [fines, setFines] = useState<PagedData<FinePostResponse> | null>(null);
+
+  const doGet = useCallback(
+    (params: RequestParams) => {
+      axios
+        .get<PagedData<FinePostResponse>>(`${apiEndpoints.fines}/fine/user`, {
+          params,
+        })
+        .then(({ data }) => {
+          setFines(data);
+        })
+        .catch((err) => {
+          if (onError) onError(err);
+        });
+    },
+    [axios, onError]
+  );
+
+  return [doGet, fines];
+};
+
+export default { usePostFine, useGetAllFines, useGetUserFines };
