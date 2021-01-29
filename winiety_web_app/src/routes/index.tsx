@@ -17,12 +17,14 @@ import Rides from './Rides';
 import Fines from './Fines';
 import Offenses from './Offenses';
 import UserProfile from './UserProfile/UserProfile';
+import UserFinesComplaints from './UserFinesComplaints';
 
 export const appRoutes = {
   home: '/',
   signIn: '/sign-in',
   signOut: '/sign-out',
   rides: '/rides',
+  userFinesComplaints: '/fines-complaints',
   fines: '/fines',
   offenses: '/offenses',
   userProfile: '/profile',
@@ -92,6 +94,11 @@ export const RoutedContent = (): ReactElement => {
       <AuthRoute
         path={appRoutes.userProfile}
         Component={UserProfile}
+        requiredRoles={['user']}
+      />
+      <AuthRoute
+        path={appRoutes.userFinesComplaints}
+        Component={UserFinesComplaints}
         requiredRoles={['user']}
       />
       <Route component={NotFound} />

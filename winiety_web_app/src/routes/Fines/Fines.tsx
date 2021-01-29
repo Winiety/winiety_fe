@@ -1,4 +1,5 @@
 import {
+  Button,
   Paper,
   Table,
   TableBody,
@@ -9,7 +10,7 @@ import {
   TableRow,
 } from '@material-ui/core';
 import React, { ReactElement, useEffect } from 'react';
-import { FineRepository } from 'api/repository';
+import { FineRepository, PictureRepository } from 'api/repository';
 import useStyles from './use-styles';
 
 const Fines = (): ReactElement => {
@@ -18,6 +19,7 @@ const Fines = (): ReactElement => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [getData, data] = FineRepository.useGetAllFines();
+  const getPicture = PictureRepository.useGetPicturePath();
 
   useEffect(() => {
     getData({ pageNumber: page + 1, pageSize: rowsPerPage });
@@ -31,6 +33,11 @@ const Fines = (): ReactElement => {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
+  };
+
+  const handleOpenImage = async (id: number) => {
+    const path = await getPicture(id);
+    window.open(path, '_blank');
   };
 
   return (
@@ -48,6 +55,7 @@ const Fines = (): ReactElement => {
               <TableCell>Opis mandatu</TableCell>
               <TableCell>Wysokość mandatu</TableCell>
               <TableCell>Data wystawienia</TableCell>
+              <TableCell />
             </TableRow>
           </TableHead>
           <TableBody>
@@ -58,6 +66,15 @@ const Fines = (): ReactElement => {
                 <TableCell>{row.cost} PLN</TableCell>
                 <TableCell component="th" scope="row">
                   {row.createTime}
+                </TableCell>
+                <TableCell>
+                  <Button
+                    onClick={async () => handleOpenImage(row.pictureId)}
+                    variant="contained"
+                    color="primary"
+                  >
+                    Zdjęcie
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}

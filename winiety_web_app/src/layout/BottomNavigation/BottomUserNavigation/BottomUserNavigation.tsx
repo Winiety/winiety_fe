@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { BottomNavigation, BottomNavigationAction } from '@material-ui/core';
-import { DriveEta } from '@material-ui/icons';
+import { DriveEta, QuestionAnswer } from '@material-ui/icons';
 import { Link, useLocation } from 'react-router-dom';
 import routes from 'routes';
 
@@ -18,6 +18,9 @@ const BottomUserNavigation = (props: Props): ReactElement => {
     switch (pathname) {
       case routes.rides:
         setValue(0);
+        break;
+      case routes.userFinesComplaints:
+        setValue(1);
         break;
       default:
         setValue(-1);
@@ -38,9 +41,14 @@ const BottomUserNavigation = (props: Props): ReactElement => {
       <BottomNavigationAction
         component={Link}
         to={routes.rides}
-        value="Przejazdy"
         label="Przejazdy"
         icon={<DriveEta />}
+      />
+      <BottomNavigationAction
+        component={Link}
+        to={routes.userFinesComplaints}
+        label="Mandaty i zażalenia"
+        icon={<QuestionAnswer />}
       />
       {/* <BottomNavigationAction
         component={Link}

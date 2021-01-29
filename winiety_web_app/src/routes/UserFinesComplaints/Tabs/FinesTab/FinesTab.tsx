@@ -9,32 +9,28 @@ import {
   TablePagination,
   TableRow,
 } from '@material-ui/core';
-import React, { ReactElement, useEffect, useState } from 'react';
-import { RideRepository, PictureRepository } from 'api/repository';
+import React, { ReactElement, useEffect } from 'react';
+import { FineRepository, PictureRepository } from 'api/repository';
 import useStyles from './use-styles';
-import { AddComplaintModal } from './Modals';
 
-const Rides = (): ReactElement => {
+interface CarsTabProps {
+  className?: string;
+}
+
+const FinesTab = (props: CarsTabProps): ReactElement => {
   const classes = useStyles();
+  const { className } = props;
 
   const [page, setPage] = React.useState(0);
-  const [rideId, setRideId] = React.useState(0);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [getData, data] = RideRepository.useGetUserRides();
+  const [getData, data] = FineRepository.useGetUserFines();
   const getPicture = PictureRepository.useGetPicturePath();
 
   useEffect(() => {
-    getData({
-      pageNumber: page + 1,
-      pageSize: rowsPerPage,
-    });
+    getData({ pageNumber: page + 1, pageSize: rowsPerPage });
   }, [getData, page, rowsPerPage]);
 
-  const handleChangePage = (
-    _event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
-    newPage: number
-  ) => {
+  const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
 
@@ -42,12 +38,6 @@ const Rides = (): ReactElement => {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
-  const handleModalOpen = (id: number) => {
-    setIsModalOpen(true);
-    setRideId(id);
   };
 
   const handleOpenImage = async (id: number) => {
@@ -55,10 +45,8 @@ const Rides = (): ReactElement => {
     window.open(path, '_blank');
   };
 
-  const handleModalClose = () => setIsModalOpen(false);
-
   return (
-    <div className={classes.root}>
+    <div className={className}>
       <TableContainer component={Paper}>
         <Table
           className={classes.table}
@@ -68,20 +56,21 @@ const Rides = (): ReactElement => {
         >
           <TableHead>
             <TableRow>
-              <TableCell width="10%">Czas przejazdu</TableCell>
-              <TableCell width="10%">Zmierzona prędkość</TableCell>
-              <TableCell width="10%">Numer rejestracyjny</TableCell>
-              <TableCell width="10%" />
-              <TableCell width="10%" />
+              <TableCell>Numer rejestracyjny</TableCell>
+              <TableCell>Opis mandatu</TableCell>
+              <TableCell>Wysokość mandatu</TableCell>
+              <TableCell>Data wystawienia</TableCell>
+              <TableCell />
             </TableRow>
           </TableHead>
           <TableBody>
             {((!!data && data.results) || []).map((row) => (
               <TableRow key={row.id}>
-                <TableCell>{row.rideDateTime}</TableCell>
-                <TableCell>{row.speed} km/h</TableCell>
+                <TableCell>{row.plateNumber}</TableCell>
+                <TableCell>{row.description}</TableCell>
+                <TableCell>{row.cost} PLN</TableCell>
                 <TableCell component="th" scope="row">
-                  {row.plateNumber}
+                  {row.createTime}
                 </TableCell>
                 <TableCell>
                   <Button
@@ -92,15 +81,6 @@ const Rides = (): ReactElement => {
                     Zdjęcie
                   </Button>
                 </TableCell>
-                <TableCell>
-                  <Button
-                    onClick={() => handleModalOpen(row.id)}
-                    variant="contained"
-                    color="primary"
-                  >
-                    Zgłoś zażalenie
-                  </Button>
-                </TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -109,7 +89,7 @@ const Rides = (): ReactElement => {
       <TablePagination
         labelRowsPerPage=""
         labelDisplayedRows={({ from, to, count }) => `${from}-${to} z ${count}`}
-        rowsPerPageOptions={[5, 10, 25]}
+        rowsPerPageOptions={[5, 10, 20]}
         component="div"
         count={data?.totalCount || 0}
         rowsPerPage={rowsPerPage}
@@ -117,13 +97,8 @@ const Rides = (): ReactElement => {
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
-      <AddComplaintModal
-        open={isModalOpen}
-        handleClose={handleModalClose}
-        rideId={rideId}
-      />
     </div>
   );
 };
 
-export default Rides;
+export default FinesTab;
