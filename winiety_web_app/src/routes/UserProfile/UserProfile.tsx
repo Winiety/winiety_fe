@@ -51,7 +51,7 @@ const UserProfile = (): ReactElement => {
         className={classes.views}
         resistance
       >
-        <TabPanel className={classes.panel} index={TabType.PROFILE}>
+        <TabPanel index={TabType.PROFILE}>
           <ProfileTab />
         </TabPanel>
         <TabPanel index={TabType.CARS}>

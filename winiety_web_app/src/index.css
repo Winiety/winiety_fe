@@ -47,3 +47,7 @@ hr.MuiDivider-root {
 .MuiTablePagination-root {
   overflow: unset !important;
 }
+
+.color-error {
+  color: red;
+}

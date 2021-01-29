@@ -8,5 +8,8 @@ export default makeStyles((theme: Theme) =>
         marginBottom: theme.spacing(1),
       },
     },
+    colorPicker: {
+      marginTop: theme.spacing(2),
+    },
   })
 );
