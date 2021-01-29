@@ -58,7 +58,6 @@ const AddCarModal = (props: AddCarModalProps): ReactElement => {
   return (
     <Modal title="Dodaj samochód" open={open} onClose={handleClose}>
       <>
-        {/* eslint-disable-next-line no-console */}
         <form onSubmit={handleSubmit(console.log)} className={classes.form}>
           <TextField
             error={!!errors.plateNumber}
@@ -84,11 +83,11 @@ const AddCarModal = (props: AddCarModalProps): ReactElement => {
             name="model"
             label="Model"
           />
-          {/* TODO: Make a select */}
           <Controller
             control={control}
             name="color"
             label="Kolor"
+            defaultValue="#fff"
             render={({ onChange, value }) => (
               <div>
                 <Button
@@ -100,7 +99,6 @@ const AddCarModal = (props: AddCarModalProps): ReactElement => {
                 </Button>
                 <Popover
                   className={classes.colorPicker}
-                  // id={id}
                   open={popoverOpen}
                   anchorEl={anchorEl}
                   onClose={handlePopoverClose}

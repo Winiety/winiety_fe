@@ -1,5 +1,5 @@
 import { useAxios, apiEndpoints } from 'api';
-import { NotificationKeyResponse } from 'api/types';
+import { NotificationKeyResponse, Error } from 'api/types';
 import { AxiosError } from 'axios';
 import { useCallback } from 'react';
 
