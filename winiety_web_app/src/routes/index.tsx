@@ -18,6 +18,8 @@ import Fines from './Fines';
 import Offenses from './Offenses';
 import UserProfile from './UserProfile/UserProfile';
 import UserFinesComplaints from './UserFinesComplaints';
+import Complaints from './Complaints';
+import Errors from './Errors';
 
 export const appRoutes = {
   home: '/',
@@ -28,6 +30,8 @@ export const appRoutes = {
   fines: '/fines',
   offenses: '/offenses',
   userProfile: '/profile',
+  complaints: '/complaints',
+  errors: '/errors',
 };
 
 const onError = () =>
@@ -100,6 +104,16 @@ export const RoutedContent = (): ReactElement => {
         path={appRoutes.userFinesComplaints}
         Component={UserFinesComplaints}
         requiredRoles={['user']}
+      />
+      <AuthRoute
+        path={appRoutes.complaints}
+        Component={Complaints}
+        requiredRoles={['corrector']}
+      />
+      <AuthRoute
+        path={appRoutes.errors}
+        Component={Errors}
+        requiredRoles={['corrector']}
       />
       <Route component={NotFound} />
     </Switch>

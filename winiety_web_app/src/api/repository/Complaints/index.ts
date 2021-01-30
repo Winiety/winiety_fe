@@ -6,7 +6,7 @@ import {
   ComplaintPostResponse,
   RequestParams,
 } from 'api/types';
-import { PagedData } from 'api/types/BaseResponse';
+import { SimpleResponse, PagedData } from 'api/types/BaseResponse';
 import { AxiosError } from 'axios';
 import { useCallback, useState } from 'react';
 
@@ -100,4 +100,32 @@ const useGetUserComplaints = (
   return [doGet, complaints];
 };
 
-export default { usePostComplaint, useGetAllComplaints, useGetUserComplaints };
+const useDeleteComplaint = (
+  onError?: (error: AxiosError<Error>) => void
+): ((id: number) => Promise<SimpleResponse | undefined>) => {
+  const axios = useAxios();
+
+  const doDelete = useCallback(
+    async (id: number) => {
+      try {
+        const data = await axios.delete<SimpleResponse>(
+          `${apiEndpoints.fines}/complaint/${id}`
+        );
+        return data.data;
+      } catch (error) {
+        if (onError) onError(error);
+      }
+      return undefined;
+    },
+    [axios, onError]
+  );
+
+  return doDelete;
+};
+
+export default {
+  usePostComplaint,
+  useGetAllComplaints,
+  useGetUserComplaints,
+  useDeleteComplaint,
+};

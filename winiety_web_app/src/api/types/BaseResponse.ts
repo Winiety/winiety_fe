@@ -17,6 +17,11 @@ export interface BasePageResponse<T> extends PagedData<T> {
   errors: Error[];
 }
 
+export interface SimpleResponse {
+  isSuccess: boolean;
+  errors: Error[];
+}
+
 export interface Error {
   message: string;
 }
