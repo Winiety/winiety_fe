@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import { useStoreState } from 'store';
 import { BaseResponse, MultiBaseResponse } from 'api/types';
 import { useMemo } from 'react';
@@ -41,7 +41,7 @@ export const useAxios = (): AxiosInstance => {
       return response;
     },
     (error) => {
-      const err = error;
+      const err = error as AxiosError<any>;
       if (err.response) {
         err.response.data = err.response.data?.errors;
       }

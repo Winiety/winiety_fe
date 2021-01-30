@@ -31,6 +31,10 @@ const CarsTab = (props: CarsTabProps): ReactElement => {
     addCar(car);
   };
 
+  const handleDeleteCar = (id: number) => {
+    deleteCarLazy(id);
+  };
+
   if (cars === undefined)
     return (
       <div className="flex-container">
@@ -60,7 +64,7 @@ const CarsTab = (props: CarsTabProps): ReactElement => {
               model={model}
               plateNumber={plateNumber}
               year={year}
-              onDelete={deleteCarLazy}
+              onDelete={handleDeleteCar}
             />
           </Grid>
         ))}
