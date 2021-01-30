@@ -7,18 +7,24 @@ import { displayNotification } from 'utils';
 const useDeleteCar = (
   onError?: (error: AxiosError<Error>) => void,
   onCompleted?: (id: number) => void
-): ((id: number) => Promise<void>) => {
+): ((id: number) => void) => {
   const axios = useAxios();
 
   const deleteCar = useCallback(
-    async (id: number) => {
-      try {
-        await axios.delete(`${apiEndpoints.profile}/car/${id}`);
-        displayNotification('Samochód', 'Samochód usunięto pomyślnie!');
-        if (onCompleted) onCompleted(id);
-      } catch (error) {
-        if (onError) onError(error);
-      }
+    (id: number) => {
+      axios
+        .delete(`${apiEndpoints.profile}/car/${id}`)
+        .then(() => {
+          displayNotification('Samochód', 'Samochód usunięto pomyślnie!');
+          if (onCompleted) onCompleted(id);
+        })
+        .catch((err) => {
+          displayNotification(
+            'Samochód',
+            'Wystąpił błąd. Możliwe, że nie masz połączenia z internetem. Spróbujemy ponownie wykonać zapytanie po powrocie do stanu online'
+          );
+          if (onError) onError(err);
+        });
     },
     [axios, onCompleted, onError]
   );

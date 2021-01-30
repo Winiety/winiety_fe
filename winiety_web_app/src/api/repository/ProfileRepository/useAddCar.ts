@@ -20,6 +20,10 @@ const useAddCar = (
         displayNotification('Samochód', 'Samochód dodano pomyślnie!');
         if (onCompleted) onCompleted(data);
       } catch (error) {
+        displayNotification(
+          'Samochód',
+          'Wystąpił błąd. Możliwe, że nie masz połączenia z internetem. Spróbujemy ponownie wykonać zapytanie po powrocie do stanu online'
+        );
         if (onError) onError(error);
       }
     },
