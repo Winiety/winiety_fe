@@ -1,4 +1,9 @@
-export type { BaseResponse, Error, BasePageResponse } from './BaseResponse';
+export type {
+  BaseResponse,
+  Error,
+  BasePageResponse,
+  SimpleResponse,
+} from './BaseResponse';
 export type { Fine, FinePostResponse, FineDetailResponse } from './FineTypes';
 export type {
   Complaint,
@@ -14,4 +19,4 @@ export type {
   NotificationKeyResponse,
   NotificationSubscription,
 } from './NotificationTypes';
-export type { Picture } from './PictureTypes';
+export type { Picture, PostPicture } from './PictureTypes';
