@@ -5,7 +5,11 @@ import { useAxios, apiEndpoints } from 'api';
 
 const useGetProfile = (
   onError?: (error: AxiosError<Error>) => void
-): [Profile | null | undefined, () => Promise<Profile | null | undefined>] => {
+): [
+  Profile | null | undefined,
+  (data: Profile) => void,
+  () => Promise<Profile | null | undefined>
+] => {
   const axios = useAxios();
   const [profile, setProfile] = useState<Profile | null | undefined>(undefined);
 
@@ -26,7 +30,12 @@ const useGetProfile = (
   useEffect(() => {
     fetchData();
   }, [fetchData]);
-  return [profile, fetchData];
+
+  const updateData = useCallback((data: Profile) => {
+    setProfile(data);
+  }, []);
+
+  return [profile, updateData, fetchData];
 };
 
 export default useGetProfile;

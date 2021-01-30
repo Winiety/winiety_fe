@@ -59,7 +59,7 @@ const UserProfile = (): ReactElement => {
           <ProfileTab />
         </TabPanel>
         <TabPanel index={TabType.CARS}>
-          <CarsTab />
+          <CarsTab className={classes.fullW} />
         </TabPanel>
       </SwipeableViews>
     </div>

@@ -11,5 +11,6 @@ export default makeStyles(() =>
     views: {
       flexGrow: 1,
     },
+    fullW: { width: '100%' },
   })
 );

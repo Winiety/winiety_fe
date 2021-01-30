@@ -7,3 +7,12 @@ export interface Profile {
   flatNumber: string;
   zip: string;
 }
+
+export interface UserCar {
+  id: number;
+  plateNumber: string;
+  brand: string;
+  model: string;
+  color: string;
+  year: string;
+}

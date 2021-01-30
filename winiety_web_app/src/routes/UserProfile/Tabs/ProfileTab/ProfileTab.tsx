@@ -54,13 +54,21 @@ const ProfileTab = (props: ProfileTabProps): ReactElement => {
     shouldFocusError: true,
   });
 
-  const [user, refetch] = ProfileRepository.useGetProfile();
-  const putProfile = ProfileRepository.usePutProfile(undefined, async () => {
-    const refetched = await refetch();
-    reset(refetched || undefined, { isDirty: false });
-  });
+  const [user, update] = ProfileRepository.useGetProfile();
+  const putProfile = ProfileRepository.usePutProfile(
+    undefined,
+    async (newProfile) => {
+      update(newProfile);
+      reset(newProfile || undefined, { isDirty: false });
+    }
+  );
 
-  if (user === undefined) return <CircularProgress />;
+  if (user === undefined)
+    return (
+      <div className="flex-container">
+        <CircularProgress />
+      </div>
+    );
 
   if (user === null) return <Typography>Wystąpił błąd.</Typography>;
 
@@ -68,7 +76,6 @@ const ProfileTab = (props: ProfileTabProps): ReactElement => {
 
   return (
     <form
-      // eslint-disable-next-line no-console
       onSubmit={handleSubmit(putProfile)}
       className={classNames(className, classes.root)}
     >

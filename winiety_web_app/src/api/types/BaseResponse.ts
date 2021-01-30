@@ -4,6 +4,12 @@ export interface BaseResponse<T> {
   result: T;
 }
 
+export interface MultiBaseResponse<T> {
+  isSuccess: boolean;
+  errors: Error[];
+  results: T[];
+}
+
 export interface PagedData<T> {
   pageSize: number;
   currentPage: number;
@@ -12,10 +18,7 @@ export interface PagedData<T> {
   results: T[];
 }
 
-export interface BasePageResponse<T> extends PagedData<T> {
-  isSuccess: boolean;
-  errors: Error[];
-}
+export type BasePageResponse<T> = PagedData<T> & MultiBaseResponse<T>;
 
 export interface Error {
   message: string;

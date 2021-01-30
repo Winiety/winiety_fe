@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { useStoreState } from 'store';
-import { BaseResponse } from 'api/types';
+import { BaseResponse, MultiBaseResponse } from 'api/types';
 import { useMemo } from 'react';
 
 const serverOrigin = process.env.REACT_APP_SERVER_ORIGIN;
@@ -31,7 +31,13 @@ export const useAxios = (): AxiosInstance => {
         res.data = res.data.result;
         return res;
       }
-
+      if (response.data && response.data.results && !response.data.totalPages) {
+        const res = response as AxiosResponse<MultiBaseResponse<any>>;
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        res.data = res.data.results;
+        return res;
+      }
       return response;
     },
     (error) => {

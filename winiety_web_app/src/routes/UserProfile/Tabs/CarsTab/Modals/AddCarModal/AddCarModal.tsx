@@ -8,18 +8,19 @@ import {
   useTheme,
 } from '@material-ui/core';
 import { Controller, useForm } from 'react-hook-form';
-import { UserCar } from 'routes/UserProfile/generators/car-generator';
+import { UserCar } from 'api/types';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ChromePicker } from 'react-color';
 import useStyles from './use-styles';
 
+type CarFormValues = Omit<UserCar, 'id'>;
+
 interface AddCarModalProps {
   open: boolean;
   handleClose: () => void;
+  onAddCar: (car: CarFormValues) => void;
 }
-
-type CarFormValues = UserCar;
 
 const formSchema: yup.SchemaOf<CarFormValues> = yup.object().shape({
   brand: yup.string().required('Marka pojazdu jest wymagana'),
@@ -30,7 +31,7 @@ const formSchema: yup.SchemaOf<CarFormValues> = yup.object().shape({
 });
 
 const AddCarModal = (props: AddCarModalProps): ReactElement => {
-  const { open, handleClose } = props;
+  const { open, handleClose, onAddCar } = props;
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
@@ -58,7 +59,7 @@ const AddCarModal = (props: AddCarModalProps): ReactElement => {
   return (
     <Modal title="Dodaj samochód" open={open} onClose={handleClose}>
       <>
-        <form onSubmit={handleSubmit(console.log)} className={classes.form}>
+        <form onSubmit={handleSubmit(onAddCar)} className={classes.form}>
           <TextField
             error={!!errors.plateNumber}
             helperText={errors.plateNumber?.message}
