@@ -2,6 +2,8 @@ export type {
   BaseResponse,
   Error,
   BasePageResponse,
+  MultiBaseResponse,
+  PagedData,
   SimpleResponse,
 } from './BaseResponse';
 export type { Fine, FinePostResponse, FineDetailResponse } from './FineTypes';
@@ -14,9 +16,9 @@ export type {
   SearchRequest as RequestParams,
   RideSearchRequest,
 } from './RequestParams';
-// eslint-disable-next-line import/prefer-default-export
 export type {
   NotificationKeyResponse,
   NotificationSubscription,
 } from './NotificationTypes';
+export type { Profile, UserCar } from './ProfileTypes';
 export type { Picture, PostPicture } from './PictureTypes';
