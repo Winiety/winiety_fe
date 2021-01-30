@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 import { useStoreState } from 'store';
+import BottomCorrectorNavigation from './BottomCorrectorNavigation';
 import BottomPoliceNavigation from './BottomPoliceNavigation';
 import BottomUserNavigation from './BottomUserNavigation';
 
@@ -14,6 +15,9 @@ const BottomNavigationComp = (props: Props): ReactElement => {
 
   if (role.includes('police'))
     return <BottomPoliceNavigation className={className} />;
+
+  if (role.includes('corrector'))
+    return <BottomCorrectorNavigation className={className} />;
 
   if (role.includes('user'))
     return <BottomUserNavigation className={className} />;

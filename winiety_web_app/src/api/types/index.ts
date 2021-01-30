@@ -4,6 +4,7 @@ export type {
   BasePageResponse,
   MultiBaseResponse,
   PagedData,
+  SimpleResponse,
 } from './BaseResponse';
 export type { Fine, FinePostResponse, FineDetailResponse } from './FineTypes';
 export type {
@@ -19,5 +20,5 @@ export type {
   NotificationKeyResponse,
   NotificationSubscription,
 } from './NotificationTypes';
-export type { Picture } from './PictureTypes';
 export type { Profile, UserCar } from './ProfileTypes';
+export type { Picture, PostPicture } from './PictureTypes';

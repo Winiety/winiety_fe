@@ -20,6 +20,11 @@ export interface PagedData<T> {
 
 export type BasePageResponse<T> = PagedData<T> & MultiBaseResponse<T>;
 
+export interface SimpleResponse {
+  isSuccess: boolean;
+  errors: Error[];
+}
+
 export interface Error {
   message: string;
 }
