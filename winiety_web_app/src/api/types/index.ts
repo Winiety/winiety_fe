@@ -13,6 +13,7 @@ export type {
 export type {
   SearchRequest as RequestParams,
   RideSearchRequest,
+  StatisticsRequest,
 } from './RequestParams';
 // eslint-disable-next-line import/prefer-default-export
 export type {
