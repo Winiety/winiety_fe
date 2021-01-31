@@ -1,6 +1,5 @@
 import { useAxios, apiEndpoints } from 'api';
 import { Error, Vignette, VignetteRequest } from 'api/types';
-import { BaseResponse } from 'api/types/BaseResponse';
 import { AxiosError } from 'axios';
 import { useCallback } from 'react';
 
@@ -17,7 +16,6 @@ const usePostVignette = (
           undefined,
           { params: bodyData }
         );
-        console.log(data);
 
         return data.payuUrl;
       } catch (error) {

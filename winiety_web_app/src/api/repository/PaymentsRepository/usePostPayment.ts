@@ -1,6 +1,5 @@
 import { useAxios, apiEndpoints } from 'api';
 import { Error, Payment, PayRequest } from 'api/types';
-import { BaseResponse } from 'api/types/BaseResponse';
 import { AxiosError } from 'axios';
 import { useCallback } from 'react';
 
