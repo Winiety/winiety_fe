@@ -30,3 +30,4 @@ export type {
   Vignette,
   VignetteRequest,
 } from './PaymentTypes';
+export type { Statistic } from './StatisticsTypes';

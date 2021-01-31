@@ -1,6 +1,7 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { BottomNavigation, BottomNavigationAction } from '@material-ui/core';
 import { CloudDownload } from '@material-ui/icons';
+import ShowChartIcon from '@material-ui/icons/ShowChart';
 import { Link, useLocation } from 'react-router-dom';
 import routes from 'routes';
 
@@ -16,8 +17,11 @@ const BottomAnalystNavigation = (props: Props): ReactElement => {
 
   useEffect(() => {
     switch (pathname) {
-      case routes.statisticsFiles:
+      case routes.statistics:
         setValue(0);
+        break;
+      case routes.statisticsFiles:
+        setValue(1);
         break;
       default:
         setValue(-1);
@@ -35,6 +39,12 @@ const BottomAnalystNavigation = (props: Props): ReactElement => {
       showLabels
       className={className}
     >
+      <BottomNavigationAction
+        component={Link}
+        to={routes.statistics}
+        label="Statystyki"
+        icon={<ShowChartIcon />}
+      />
       <BottomNavigationAction
         component={Link}
         to={routes.statisticsFiles}

@@ -23,6 +23,7 @@ import Errors from './Errors';
 import StatisticsFiles from './StatisticsFiles';
 import UserPayments from './UserPayments';
 import UserVignettes from './UserVignettes';
+import Statistics from './Statistics';
 
 export const appRoutes = {
   home: '/',
@@ -38,6 +39,7 @@ export const appRoutes = {
   statisticsFiles: '/statistics/files',
   UserPayments: '/payments',
   UserVignettes: '/vignettes',
+  statistics: '/statistics',
 };
 
 const onError = () =>
@@ -134,6 +136,11 @@ export const RoutedContent = (): ReactElement => {
       <AuthRoute
         path={appRoutes.statisticsFiles}
         Component={StatisticsFiles}
+        requiredRoles={['analyst']}
+      />
+      <AuthRoute
+        path={appRoutes.statistics}
+        Component={Statistics}
         requiredRoles={['analyst']}
       />
       <Route component={NotFound} />
