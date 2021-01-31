@@ -16,6 +16,7 @@ export type {
   SearchRequest as RequestParams,
   RideSearchRequest,
   StatisticsRequest,
+  PaymentRequest,
 } from './RequestParams';
 export type {
   NotificationKeyResponse,
@@ -23,4 +24,10 @@ export type {
 } from './NotificationTypes';
 export type { Profile, UserCar } from './ProfileTypes';
 export type { Picture, PostPicture } from './PictureTypes';
+export type {
+  Payment,
+  PayRequest,
+  Vignette,
+  VignetteRequest,
+} from './PaymentTypes';
 export type { Statistic } from './StatisticsTypes';

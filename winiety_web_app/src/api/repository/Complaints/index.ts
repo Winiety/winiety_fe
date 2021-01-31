@@ -9,6 +9,7 @@ import {
 import { SimpleResponse, PagedData } from 'api/types/BaseResponse';
 import { AxiosError } from 'axios';
 import { useCallback, useState } from 'react';
+import { displayNotification } from 'utils';
 
 const usePostComplaint = (
   onError?: (error: AxiosError<Error>) => void
@@ -23,8 +24,15 @@ const usePostComplaint = (
     (data: Complaint) => {
       axios
         .post<ComplaintPostResponse>(`${apiEndpoints.fines}/complaint`, data)
-        .then((res) => setComplaintData(res.data))
+        .then((res) => {
+          displayNotification('Zażalenie', 'Zażalenie dodano pomyślnie!');
+          setComplaintData(res.data);
+        })
         .catch((err) => {
+          displayNotification(
+            'Zażalenie',
+            'Wystąpił błąd. Możliwe, że nie masz połączenia z internetem. Spróbujemy ponownie wykonać zapytanie po powrocie do stanu online'
+          );
           if (onError) onError(err);
         });
     },

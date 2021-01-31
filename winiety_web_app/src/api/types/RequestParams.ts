@@ -15,3 +15,7 @@ export interface StatisticsRequest {
   dateTo?: string;
   groupBy?: string;
 }
+
+export interface PaymentRequest extends SearchRequest {
+  status?: string;
+}

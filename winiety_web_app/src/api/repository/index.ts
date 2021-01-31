@@ -5,3 +5,4 @@ export { default as NotificationRepository } from './Notification';
 export { default as PictureRepository } from './Picture';
 export { default as StatisticsRepository } from './Statistics';
 export { default as ProfileRepository } from './ProfileRepository';
+export { default as PaymentsRepository } from './PaymentsRepository';

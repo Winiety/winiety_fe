@@ -21,6 +21,8 @@ import UserFinesComplaints from './UserFinesComplaints';
 import Complaints from './Complaints';
 import Errors from './Errors';
 import StatisticsFiles from './StatisticsFiles';
+import UserPayments from './UserPayments';
+import UserVignettes from './UserVignettes';
 import Statistics from './Statistics';
 
 export const appRoutes = {
@@ -35,6 +37,8 @@ export const appRoutes = {
   complaints: '/complaints',
   errors: '/errors',
   statisticsFiles: '/statistics/files',
+  UserPayments: '/payments',
+  UserVignettes: '/vignettes',
   statistics: '/statistics',
 };
 
@@ -90,16 +94,6 @@ export const RoutedContent = (): ReactElement => {
         requiredRoles={['user']}
       />
       <AuthRoute
-        path={appRoutes.fines}
-        Component={Fines}
-        requiredRoles={['police']}
-      />
-      <AuthRoute
-        path={appRoutes.offenses}
-        Component={Offenses}
-        requiredRoles={['police']}
-      />
-      <AuthRoute
         path={appRoutes.userProfile}
         Component={UserProfile}
         requiredRoles={['user']}
@@ -108,6 +102,26 @@ export const RoutedContent = (): ReactElement => {
         path={appRoutes.userFinesComplaints}
         Component={UserFinesComplaints}
         requiredRoles={['user']}
+      />
+      <AuthRoute
+        path={appRoutes.UserPayments}
+        Component={UserPayments}
+        requiredRoles={['user']}
+      />
+      <AuthRoute
+        path={appRoutes.UserVignettes}
+        Component={UserVignettes}
+        requiredRoles={['user']}
+      />
+      <AuthRoute
+        path={appRoutes.fines}
+        Component={Fines}
+        requiredRoles={['police']}
+      />
+      <AuthRoute
+        path={appRoutes.offenses}
+        Component={Offenses}
+        requiredRoles={['police']}
       />
       <AuthRoute
         path={appRoutes.complaints}
