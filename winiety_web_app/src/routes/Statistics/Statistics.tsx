@@ -3,7 +3,6 @@ import {
   CircularProgress,
   FormControl,
   InputLabel,
-  LinearProgress,
   MenuItem,
   Paper,
   Select,
@@ -148,7 +147,6 @@ const Statistics = (): ReactElement => {
             <CircularProgress />
           </div>
         )}
-        {isLoading && !!statistics && <LinearProgress />}
         {statistics && chartData && (
           <ResponsiveContainer width="100%" height="100%">
             <LineChart margin={{ bottom: 10 }} data={chartData}>
