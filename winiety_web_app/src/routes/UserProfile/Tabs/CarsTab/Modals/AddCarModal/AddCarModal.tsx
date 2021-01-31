@@ -1,18 +1,26 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { Modal } from 'components';
-import { Button, TextField } from '@material-ui/core';
-import { useForm } from 'react-hook-form';
-import { UserCar } from 'routes/UserProfile/generators/car-generator';
+import {
+  Button,
+  Popover,
+  TextField,
+  Typography,
+  useTheme,
+} from '@material-ui/core';
+import { Controller, useForm } from 'react-hook-form';
+import { UserCar } from 'api/types';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { ChromePicker } from 'react-color';
 import useStyles from './use-styles';
+
+type CarFormValues = Omit<UserCar, 'id'>;
 
 interface AddCarModalProps {
   open: boolean;
   handleClose: () => void;
+  onAddCar: (car: CarFormValues) => void;
 }
-
-type CarFormValues = UserCar;
 
 const formSchema: yup.SchemaOf<CarFormValues> = yup.object().shape({
   brand: yup.string().required('Marka pojazdu jest wymagana'),
@@ -23,10 +31,27 @@ const formSchema: yup.SchemaOf<CarFormValues> = yup.object().shape({
 });
 
 const AddCarModal = (props: AddCarModalProps): ReactElement => {
-  const { open, handleClose } = props;
+  const { open, handleClose, onAddCar } = props;
   const classes = useStyles();
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
-  const { handleSubmit, register, errors } = useForm<CarFormValues>({
+  const {
+    palette: {
+      background: { default: themeBgColor },
+    },
+  } = useTheme();
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+  };
+
+  const popoverOpen = Boolean(anchorEl);
+
+  const { handleSubmit, register, errors, control } = useForm<CarFormValues>({
     resolver: yupResolver(formSchema),
     shouldFocusError: true,
   });
@@ -34,8 +59,7 @@ const AddCarModal = (props: AddCarModalProps): ReactElement => {
   return (
     <Modal title="Dodaj samochód" open={open} onClose={handleClose}>
       <>
-        {/* eslint-disable-next-line no-console */}
-        <form onSubmit={handleSubmit(console.log)} className={classes.form}>
+        <form onSubmit={handleSubmit(onAddCar)} className={classes.form}>
           <TextField
             error={!!errors.plateNumber}
             helperText={errors.plateNumber?.message}
@@ -60,15 +84,52 @@ const AddCarModal = (props: AddCarModalProps): ReactElement => {
             name="model"
             label="Model"
           />
-          {/* TODO: Make a select */}
-          <TextField
-            error={!!errors.color}
-            helperText={errors.color?.message}
-            inputRef={register}
-            fullWidth
+          <Controller
+            control={control}
             name="color"
             label="Kolor"
+            defaultValue="#fff"
+            render={({ onChange, value }) => (
+              <div>
+                <Button
+                  style={{ backgroundColor: value || undefined }}
+                  variant="contained"
+                  onClick={handleClick}
+                >
+                  Wybierz kolor
+                </Button>
+                <Popover
+                  className={classes.colorPicker}
+                  open={popoverOpen}
+                  anchorEl={anchorEl}
+                  onClose={handlePopoverClose}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'center',
+                  }}
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'center',
+                  }}
+                >
+                  <ChromePicker
+                    styles={{
+                      default: {
+                        body: { backgroundColor: themeBgColor },
+                      },
+                    }}
+                    color={value}
+                    onChange={(e) => onChange(e.hex)}
+                  />
+                </Popover>
+              </div>
+            )}
           />
+          {!!errors.color && (
+            <Typography className="color-error" variant="caption">
+              {errors.color?.message}
+            </Typography>
+          )}
           <TextField
             error={!!errors.year}
             helperText={errors.year?.message}

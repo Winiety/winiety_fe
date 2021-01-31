@@ -9,11 +9,12 @@ interface TabPanelProps
   > {
   children?: React.ReactNode;
   dir?: string;
+  style?: React.CSSProperties;
   index: number;
 }
 
 const TabPanel = (props: TabPanelProps): ReactElement => {
-  const { children, index, ...other } = props;
+  const { children, index, style, ...other } = props;
   const classes = useStyles();
   return (
     <div
@@ -23,8 +24,16 @@ const TabPanel = (props: TabPanelProps): ReactElement => {
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...other}
     >
-      <Box p={3} height="100%">
-        <Paper className={classes.paper}>{children}</Paper>
+      <Box
+        p={3}
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        height="100%"
+      >
+        <Paper style={style} className={classes.paper}>
+          {children}
+        </Paper>
       </Box>
     </div>
   );

@@ -1,2 +1,2 @@
-// eslint-disable-next-line import/prefer-default-export
-export { AddCarModal } from './AddCarModal';
+export { default as AddCarModal } from './AddCarModal';
+export { default as AreYouSureDeleteCarModal } from './AreYouSureDeleteCarModal';
