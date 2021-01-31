@@ -2,6 +2,7 @@ import { useAxios, apiEndpoints } from 'api';
 import { Error, StatisticsRequest } from 'api/types';
 import { AxiosError } from 'axios';
 import { useCallback } from 'react';
+import useGetStatistics from './useGetStatistics';
 
 const useGetCsvFile = (
   onError?: (error: AxiosError<Error>) => void
@@ -73,4 +74,5 @@ const useGetJsonFile = (
 export default {
   useGetCsvFile,
   useGetJsonFile,
+  useGetStatistics,
 };
