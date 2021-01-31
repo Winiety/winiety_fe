@@ -5,6 +5,7 @@ export default makeStyles((theme: Theme) =>
     paper: {
       height: '100%',
       padding: theme.spacing(2),
+      width: '100%',
     },
   })
 );

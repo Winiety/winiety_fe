@@ -17,15 +17,29 @@ import Rides from './Rides';
 import Fines from './Fines';
 import Offenses from './Offenses';
 import UserProfile from './UserProfile/UserProfile';
+import UserFinesComplaints from './UserFinesComplaints';
+import Complaints from './Complaints';
+import Errors from './Errors';
+import StatisticsFiles from './StatisticsFiles';
+import UserPayments from './UserPayments';
+import UserVignettes from './UserVignettes';
+import Statistics from './Statistics';
 
 export const appRoutes = {
   home: '/',
   signIn: '/sign-in',
   signOut: '/sign-out',
   rides: '/rides',
+  userFinesComplaints: '/fines-complaints',
   fines: '/fines',
   offenses: '/offenses',
   userProfile: '/profile',
+  complaints: '/complaints',
+  errors: '/errors',
+  statisticsFiles: '/statistics/files',
+  UserPayments: '/payments',
+  UserVignettes: '/vignettes',
+  statistics: '/statistics',
 };
 
 const onError = () =>
@@ -80,6 +94,26 @@ export const RoutedContent = (): ReactElement => {
         requiredRoles={['user']}
       />
       <AuthRoute
+        path={appRoutes.userProfile}
+        Component={UserProfile}
+        requiredRoles={['user']}
+      />
+      <AuthRoute
+        path={appRoutes.userFinesComplaints}
+        Component={UserFinesComplaints}
+        requiredRoles={['user']}
+      />
+      <AuthRoute
+        path={appRoutes.UserPayments}
+        Component={UserPayments}
+        requiredRoles={['user']}
+      />
+      <AuthRoute
+        path={appRoutes.UserVignettes}
+        Component={UserVignettes}
+        requiredRoles={['user']}
+      />
+      <AuthRoute
         path={appRoutes.fines}
         Component={Fines}
         requiredRoles={['police']}
@@ -90,9 +124,24 @@ export const RoutedContent = (): ReactElement => {
         requiredRoles={['police']}
       />
       <AuthRoute
-        path={appRoutes.userProfile}
-        Component={UserProfile}
-        requiredRoles={['user']}
+        path={appRoutes.complaints}
+        Component={Complaints}
+        requiredRoles={['corrector']}
+      />
+      <AuthRoute
+        path={appRoutes.errors}
+        Component={Errors}
+        requiredRoles={['corrector']}
+      />
+      <AuthRoute
+        path={appRoutes.statisticsFiles}
+        Component={StatisticsFiles}
+        requiredRoles={['analyst']}
+      />
+      <AuthRoute
+        path={appRoutes.statistics}
+        Component={Statistics}
+        requiredRoles={['analyst']}
       />
       <Route component={NotFound} />
     </Switch>

@@ -18,7 +18,7 @@ const SignInOidc = (): ReactElement => {
         login(accessToken);
       }
       displayNotification('WINIETY', 'Witaj w winietach!');
-      history.push(routes.rides);
+      history.push(routes.home);
     };
     signInAsync();
   }, [history, login]);

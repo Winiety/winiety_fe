@@ -13,6 +13,7 @@ import { ExpirationPlugin } from 'workbox-expiration';
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
+import { Queue } from 'workbox-background-sync';
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -82,7 +83,7 @@ self.addEventListener('message', (event) => {
 self.addEventListener('push', (e) => {
   let body;
   console.log(e);
-  
+
   if (e.data) {
     body = JSON.parse(e.data.text())['Content'];
   } else {
@@ -95,4 +96,16 @@ self.addEventListener('push', (e) => {
     vibrate: [100, 50, 100],
   };
   e.waitUntil(self.registration.showNotification('WINIETY', options));
+});
+
+const queue = new Queue('requests');
+
+self.addEventListener('fetch', (event) => {
+  // Clone the request to ensure it's safe to read when
+  // adding to the Queue.
+  const promiseChain = fetch(event.request.clone()).catch((err) => {
+    return queue.pushRequest({ request: event.request });
+  });
+
+  event.waitUntil(promiseChain);
 });

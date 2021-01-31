@@ -9,6 +9,7 @@ import {
 import { PagedData } from 'api/types/BaseResponse';
 import { AxiosError } from 'axios';
 import { useCallback, useState } from 'react';
+import { displayNotification } from 'utils';
 
 const usePostFine = (
   onError?: (error: AxiosError<Error>) => void
@@ -20,8 +21,15 @@ const usePostFine = (
     (data: Fine) => {
       axios
         .post<FinePostResponse>(`${apiEndpoints.fines}/fine`, data)
-        .then((res) => setFineData(res.data))
+        .then((res) => {
+          displayNotification('Mandat', 'Mandat wystawiono pomyślnie!');
+          setFineData(res.data);
+        })
         .catch((err) => {
+          displayNotification(
+            'Mandat',
+            'Wystąpił błąd. Możliwe, że nie masz połączenia z internetem. Spróbujemy ponownie wykonać zapytanie po powrocie do stanu online'
+          );
           if (onError) onError(err);
         });
     },
@@ -58,4 +66,29 @@ const useGetAllFines = (
   return [doGet, fines];
 };
 
-export default { usePostFine, useGetAllFines };
+const useGetUserFines = (
+  onError?: (error: AxiosError<Error>) => void
+): [(params: RequestParams) => void, PagedData<FinePostResponse> | null] => {
+  const axios = useAxios();
+  const [fines, setFines] = useState<PagedData<FinePostResponse> | null>(null);
+
+  const doGet = useCallback(
+    (params: RequestParams) => {
+      axios
+        .get<PagedData<FinePostResponse>>(`${apiEndpoints.fines}/fine/user`, {
+          params,
+        })
+        .then(({ data }) => {
+          setFines(data);
+        })
+        .catch((err) => {
+          if (onError) onError(err);
+        });
+    },
+    [axios, onError]
+  );
+
+  return [doGet, fines];
+};
+
+export default { usePostFine, useGetAllFines, useGetUserFines };

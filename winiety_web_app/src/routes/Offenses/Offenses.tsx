@@ -11,7 +11,7 @@ import {
   TextField,
 } from '@material-ui/core';
 import React, { ReactElement, useEffect, useState } from 'react';
-import { RideRepository } from 'api/repository';
+import { PictureRepository, RideRepository } from 'api/repository';
 import useStyles from './use-styles';
 import { AddFineModal } from './Modals';
 
@@ -24,6 +24,7 @@ const Offenses = (): ReactElement => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [getData, data] = RideRepository.useGetAllRides();
+  const getPicture = PictureRepository.useGetPicturePath();
 
   useEffect(() => {
     if (speed) {
@@ -67,6 +68,11 @@ const Offenses = (): ReactElement => {
     setSpeed(event.target.value);
   };
 
+  const handleOpenImage = async (id: number) => {
+    const path = await getPicture(id);
+    window.open(path, '_blank');
+  };
+
   return (
     <div className={classes.root}>
       <div className={classes.paper}>
@@ -88,15 +94,30 @@ const Offenses = (): ReactElement => {
         >
           <TableHead>
             <TableRow>
-              <TableCell width="10%" />
-              <TableCell width="10%">Zmierzona prędkość</TableCell>
-              <TableCell width="10%">Numer rejestracyjny</TableCell>
-              <TableCell width="10%">Czas przejazdu</TableCell>
+              <TableCell>Czas przejazdu</TableCell>
+              <TableCell>Zmierzona prędkość</TableCell>
+              <TableCell>Numer rejestracyjny</TableCell>
+              <TableCell />
+              <TableCell />
             </TableRow>
           </TableHead>
           <TableBody>
             {((!!data && data.results) || []).map((row) => (
               <TableRow key={row.id}>
+                <TableCell>{row.rideDateTime}</TableCell>
+                <TableCell>{row.speed} km/h</TableCell>
+                <TableCell component="th" scope="row">
+                  {row.plateNumber}
+                </TableCell>
+                <TableCell>
+                  <Button
+                    onClick={async () => handleOpenImage(row.pictureId)}
+                    variant="contained"
+                    color="primary"
+                  >
+                    Zdjęcie
+                  </Button>
+                </TableCell>
                 <TableCell>
                   <Button
                     onClick={() => handleModalOpen(row.id)}
@@ -106,11 +127,6 @@ const Offenses = (): ReactElement => {
                     Wystaw mandat
                   </Button>
                 </TableCell>
-                <TableCell>{row.speed} km/h</TableCell>
-                <TableCell component="th" scope="row">
-                  {row.plateNumber}
-                </TableCell>
-                <TableCell>{row.rideDateTime}</TableCell>
               </TableRow>
             ))}
           </TableBody>

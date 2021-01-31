@@ -2,17 +2,18 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core';
 
 export default makeStyles((theme: Theme) =>
   createStyles({
+    root: {
+      flexGrow: 1,
+      height: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+    },
     paper: {
-      marginTop: theme.spacing(20),
+      paddingTop: theme.spacing(10),
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-    },
-    button: {
-      margin: theme.spacing(5, 0, 0),
-    },
-    image: {
-      marginBottom: theme.spacing(6),
+      paddingBottom: theme.spacing(5),
     },
   })
 );

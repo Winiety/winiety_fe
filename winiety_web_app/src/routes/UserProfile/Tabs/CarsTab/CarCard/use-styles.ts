@@ -24,8 +24,13 @@ export default makeStyles((theme: Theme) =>
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
+      position: 'relative',
     },
-
+    deleteIcon: {
+      position: 'absolute',
+      top: theme.spacing(1),
+      right: theme.spacing(1),
+    },
     carIcon: {
       padding: theme.spacing(2),
       height: '100%',

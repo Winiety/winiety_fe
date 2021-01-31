@@ -13,6 +13,7 @@ export default makeStyles((theme: Theme) =>
     },
     image: {
       marginBottom: theme.spacing(6),
+      width: 200,
     },
   })
 );

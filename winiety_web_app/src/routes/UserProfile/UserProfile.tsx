@@ -14,8 +14,8 @@ const UserProfile = (): ReactElement => {
   const classes = useStyles();
   const [activeTab, setActiveTab] = useState<TabType>(TabType.PROFILE);
 
-  const theme = useTheme();
-  const matchesSmall = useMediaQuery(theme.breakpoints.up('sm'));
+  const { breakpoints, direction } = useTheme();
+  const matchesSmall = useMediaQuery(breakpoints.up('sm'));
 
   const handleChange = (
     _event: React.ChangeEvent<unknown>,
@@ -44,18 +44,22 @@ const UserProfile = (): ReactElement => {
           <Tab label="Moje samochody" />
         </Tabs>
       </Paper>
+
       <SwipeableViews
-        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+        axis={direction === 'rtl' ? 'x-reverse' : 'x'}
         index={activeTab}
         onChangeIndex={handleChangeIndex}
         className={classes.views}
         resistance
       >
-        <TabPanel className={classes.panel} index={TabType.PROFILE}>
+        <TabPanel
+          style={{ maxWidth: breakpoints.width('sm') }}
+          index={TabType.PROFILE}
+        >
           <ProfileTab />
         </TabPanel>
         <TabPanel index={TabType.CARS}>
-          <CarsTab />
+          <CarsTab className={classes.fullW} />
         </TabPanel>
       </SwipeableViews>
     </div>
