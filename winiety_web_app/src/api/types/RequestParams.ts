@@ -9,3 +9,9 @@ export interface RideSearchRequest extends SearchRequest {
   endDate?: string;
   speedLimit?: number;
 }
+
+export interface StatisticsRequest {
+  dateFrom?: string;
+  dateTo?: string;
+  groupBy?: string;
+}

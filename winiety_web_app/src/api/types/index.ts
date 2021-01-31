@@ -15,6 +15,7 @@ export type {
 export type {
   SearchRequest as RequestParams,
   RideSearchRequest,
+  StatisticsRequest,
 } from './RequestParams';
 export type {
   NotificationKeyResponse,

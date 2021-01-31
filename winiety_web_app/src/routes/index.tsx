@@ -20,6 +20,7 @@ import UserProfile from './UserProfile/UserProfile';
 import UserFinesComplaints from './UserFinesComplaints';
 import Complaints from './Complaints';
 import Errors from './Errors';
+import StatisticsFiles from './StatisticsFiles';
 
 export const appRoutes = {
   home: '/',
@@ -32,6 +33,7 @@ export const appRoutes = {
   userProfile: '/profile',
   complaints: '/complaints',
   errors: '/errors',
+  statisticsFiles: '/statistics/files',
 };
 
 const onError = () =>
@@ -114,6 +116,11 @@ export const RoutedContent = (): ReactElement => {
         path={appRoutes.errors}
         Component={Errors}
         requiredRoles={['corrector']}
+      />
+      <AuthRoute
+        path={appRoutes.statisticsFiles}
+        Component={StatisticsFiles}
+        requiredRoles={['analyst']}
       />
       <Route component={NotFound} />
     </Switch>
