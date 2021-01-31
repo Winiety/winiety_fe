@@ -10,7 +10,9 @@ const gatewayPort = process.env.REACT_APP_API_GATEWAY_PORT;
 
 const gatewayBasePath = process.env.REACT_APP_API_BASE_PATH;
 
-export const apiUrl = `${serverOrigin}:${gatewayPort}${gatewayBasePath}`;
+export const apiUrl = `${serverOrigin}:${
+  process.env.NODE_ENV.includes('development') ? gatewayPort : ''
+}${gatewayBasePath}`;
 
 export const useAxios = (): AxiosInstance => {
   const authToken = useStoreState((store) => store.userSession.accessToken);

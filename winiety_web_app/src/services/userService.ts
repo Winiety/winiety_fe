@@ -18,14 +18,6 @@ const userServiceConfig: UserManagerSettings = {
   scope:
     'openid profile ai fines payment pictures rides statistics userprofile notification',
   post_logout_redirect_uri: `${window.location.origin}/sign-out`,
-  // metadata: {
-  //   jwks_uri: `${authority}/.well-known/openid-configuration/jwks`,
-  //   end_session_endpoint: `${authority}/connect/endsession`,
-  //   authorization_endpoint: `${authority}/connect/authorize`,
-  // },
-  // signingKeys: JSON.parse(
-  //   '[{"kty": "RSA","use": "sig","kid": "C39FA294EA094F976D25955361B06E9A","e": "AQAB","n":"yDCcEVoKvYi3uiZegFwtTdAdlTvxdbLl2xrYMEemofp7QCADdjSHuJR-0K3bZOSmmsYLIFJQRjXXeI29Z_f1w9jyTqsQrOT_5Bd8kpX50bqqOrQngnNN2AbaxlRCfKZ84MHE2xFIDQLLiE6C61RkuDdpBACwfAWevnYN0-syNNmW0mEiPWGL3oYmgM2Jzi0VO4EfpErCJ1Qsf7rawLDYluYr0DG9sU_rdahr-Itxs3mOwlyPziIHAOpwNgCzD7YIOeD6qaLITwYGMCj8dE0IbGgHac4Vap6Mj6XEigQzizArhFgnucOAONl10FdU9Js7VfL1C2oBg2mI7NhuVYV8Uw","alg": "RS256"}]'
-  // ),
 };
 
 const userManager = new UserManager(userServiceConfig);
