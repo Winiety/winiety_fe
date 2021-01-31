@@ -21,6 +21,7 @@ import UserFinesComplaints from './UserFinesComplaints';
 import Complaints from './Complaints';
 import Errors from './Errors';
 import StatisticsFiles from './StatisticsFiles';
+import Statistics from './Statistics';
 
 export const appRoutes = {
   home: '/',
@@ -34,6 +35,7 @@ export const appRoutes = {
   complaints: '/complaints',
   errors: '/errors',
   statisticsFiles: '/statistics/files',
+  statistics: '/statistics',
 };
 
 const onError = () =>
@@ -120,6 +122,11 @@ export const RoutedContent = (): ReactElement => {
       <AuthRoute
         path={appRoutes.statisticsFiles}
         Component={StatisticsFiles}
+        requiredRoles={['analyst']}
+      />
+      <AuthRoute
+        path={appRoutes.statistics}
+        Component={Statistics}
         requiredRoles={['analyst']}
       />
       <Route component={NotFound} />

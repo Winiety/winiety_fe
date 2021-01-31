@@ -23,3 +23,4 @@ export type {
 } from './NotificationTypes';
 export type { Profile, UserCar } from './ProfileTypes';
 export type { Picture, PostPicture } from './PictureTypes';
+export type { Statistic } from './StatisticsTypes';
