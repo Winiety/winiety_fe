@@ -18,6 +18,9 @@ const userServiceConfig: UserManagerSettings = {
   scope:
     'openid profile ai fines payment pictures rides statistics userprofile notification',
   post_logout_redirect_uri: `${window.location.origin}/sign-out`,
+  metadata: {
+    jwks_uri: `${authority}/.well-known/openid-configuration/jwks`,
+  },
 };
 
 const userManager = new UserManager(userServiceConfig);
