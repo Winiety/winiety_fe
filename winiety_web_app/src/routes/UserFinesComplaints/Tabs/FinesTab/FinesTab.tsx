@@ -11,6 +11,7 @@ import {
 } from '@material-ui/core';
 import React, { ReactElement, useEffect } from 'react';
 import { FineRepository, PictureRepository } from 'api/repository';
+import { format, parseISO } from 'date-fns';
 import useStyles from './use-styles';
 
 interface CarsTabProps {
@@ -70,7 +71,7 @@ const FinesTab = (props: CarsTabProps): ReactElement => {
                 <TableCell>{row.description}</TableCell>
                 <TableCell>{row.cost} PLN</TableCell>
                 <TableCell component="th" scope="row">
-                  {row.createTime}
+                  {format(parseISO(row.createTime), 'yyyy-MM-dd HH:mm:ss')}
                 </TableCell>
                 <TableCell>
                   <Button
