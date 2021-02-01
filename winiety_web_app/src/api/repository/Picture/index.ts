@@ -57,26 +57,27 @@ const useGetAllNotRecognizedPictures = (
 
 const usePostPictureAnalysis = (
   onError?: (error: AxiosError<Error>) => void
-): [(bodyData: PostPicture) => void, SimpleResponse | null] => {
+): ((bodyData: PostPicture) => Promise<SimpleResponse | undefined>) => {
   const axios = useAxios();
-  const [response, setResponse] = useState<SimpleResponse | null>(null);
 
   const doPost = useCallback(
-    (data: PostPicture) => {
-      axios
-        .post<SimpleResponse>(
+    async (bodyData: PostPicture) => {
+      try {
+        const { data } = await axios.post<SimpleResponse>(
           `${apiEndpoints.pictures}/pictures/analyze-picture`,
-          data
-        )
-        .then((res) => setResponse(res.data))
-        .catch((err) => {
-          if (onError) onError(err);
-        });
+          bodyData
+        );
+        return data;
+      } catch (err) {
+        if (onError) onError(err);
+      }
+      return undefined;
     },
+
     [axios, onError]
   );
 
-  return [doPost, response];
+  return doPost;
 };
 
 export default {

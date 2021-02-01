@@ -47,9 +47,10 @@ const ComplaintsTab = (props: CarsTabProps): ReactElement => {
     window.open(path, '_blank');
   };
 
-  const handleComplaintDelete = async (id: number) => {
-    deleteComplaint(id);
-    getData({ pageNumber: page + 1, pageSize: rowsPerPage });
+  const handleComplaintDelete = (id: number) => {
+    deleteComplaint(id).then(() => {
+      getData({ pageNumber: page + 1, pageSize: rowsPerPage });
+    });
   };
 
   return (

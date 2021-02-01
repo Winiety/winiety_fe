@@ -17,6 +17,7 @@ interface AddPictureAnalysisModalProps {
   pictureId: number;
   open: boolean;
   handleClose: () => void;
+  handleReload: () => void;
 }
 
 type PictureFormValues = Omit<PostPicture, 'pictureId'>;
@@ -33,9 +34,9 @@ const formSchema: yup.SchemaOf<PictureFormValues> = yup.object().shape({
 const AddPictureAnalysis = (
   props: AddPictureAnalysisModalProps
 ): ReactElement => {
-  const { open, handleClose } = props;
+  const { open, handleClose, handleReload } = props;
   const classes = useStyles();
-  const [postData] = PictureRepository.usePostPictureAnalysis();
+  const postData = PictureRepository.usePostPictureAnalysis();
 
   const { handleSubmit, register, errors, watch, control } = useForm<
     PictureFormValues
@@ -47,7 +48,9 @@ const AddPictureAnalysis = (
   const handlePictureAnalysisPost = (formData: PostPicture) => {
     // eslint-disable-next-line no-param-reassign
     formData.pictureId = props.pictureId;
-    postData(formData);
+    postData(formData).then(() => {
+      handleReload();
+    });
 
     handleClose();
   };

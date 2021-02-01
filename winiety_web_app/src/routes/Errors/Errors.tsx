@@ -49,9 +49,12 @@ const Errors = (): ReactElement => {
     setPictureId(id);
   };
 
+  const handleReload = () => {
+    getData({ pageNumber: page + 1, pageSize: rowsPerPage });
+  };
+
   const handleModalClose = () => {
     setIsModalOpen(false);
-    getData({ pageNumber: page + 1, pageSize: rowsPerPage });
   };
 
   return (
@@ -114,6 +117,7 @@ const Errors = (): ReactElement => {
         open={isModalOpen}
         handleClose={handleModalClose}
         pictureId={pictureId}
+        handleReload={handleReload}
       />
     </div>
   );
