@@ -6,7 +6,7 @@ import { useAxios, apiEndpoints } from 'api';
 interface GetStatisticsParams {
   dateFrom?: string;
   dateTo?: string;
-  query?: string;
+  groupBy?: string;
 }
 
 const useGetStatistics = (
