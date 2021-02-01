@@ -74,7 +74,7 @@ const Statistics = (): ReactElement => {
     getStatistics({
       dateFrom: startDate?.toISOString(),
       dateTo: endDate?.toISOString(),
-      query: groupBy,
+      groupBy,
     });
 
   return (
