@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { PictureRepository, RideRepository } from 'api/repository';
+import { format, parseISO } from 'date-fns';
 import useStyles from './use-styles';
 import { AddFineModal } from './Modals';
 
@@ -104,7 +105,9 @@ const Offenses = (): ReactElement => {
           <TableBody>
             {((!!data && data.results) || []).map((row) => (
               <TableRow key={row.id}>
-                <TableCell>{row.rideDateTime}</TableCell>
+                <TableCell>
+                  {format(parseISO(row.rideDateTime), 'yyyy-MM-dd HH:mm:ss')}
+                </TableCell>
                 <TableCell>{row.speed} km/h</TableCell>
                 <TableCell component="th" scope="row">
                   {row.plateNumber}

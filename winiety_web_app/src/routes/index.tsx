@@ -91,57 +91,57 @@ export const RoutedContent = (): ReactElement => {
       <AuthRoute
         path={appRoutes.rides}
         Component={Rides}
-        requiredRoles={['user']}
+        requiredRoles={['user', 'admin']}
       />
       <AuthRoute
         path={appRoutes.userProfile}
         Component={UserProfile}
-        requiredRoles={['user']}
+        requiredRoles={['user', 'admin']}
       />
       <AuthRoute
         path={appRoutes.userFinesComplaints}
         Component={UserFinesComplaints}
-        requiredRoles={['user']}
+        requiredRoles={['user', 'admin']}
       />
       <AuthRoute
         path={appRoutes.UserPayments}
         Component={UserPayments}
-        requiredRoles={['user']}
+        requiredRoles={['user', 'admin']}
       />
       <AuthRoute
         path={appRoutes.UserVignettes}
         Component={UserVignettes}
-        requiredRoles={['user']}
+        requiredRoles={['user', 'admin']}
       />
       <AuthRoute
         path={appRoutes.fines}
         Component={Fines}
-        requiredRoles={['police']}
+        requiredRoles={['police', 'admin']}
       />
       <AuthRoute
         path={appRoutes.offenses}
         Component={Offenses}
-        requiredRoles={['police']}
+        requiredRoles={['police', 'admin']}
       />
       <AuthRoute
         path={appRoutes.complaints}
         Component={Complaints}
-        requiredRoles={['corrector']}
+        requiredRoles={['corrector', 'admin']}
       />
       <AuthRoute
         path={appRoutes.errors}
         Component={Errors}
-        requiredRoles={['corrector']}
+        requiredRoles={['corrector', 'admin']}
       />
       <AuthRoute
         path={appRoutes.statisticsFiles}
         Component={StatisticsFiles}
-        requiredRoles={['analyst']}
+        requiredRoles={['analyst', 'admin']}
       />
       <AuthRoute
         path={appRoutes.statistics}
         Component={Statistics}
-        requiredRoles={['analyst']}
+        requiredRoles={['analyst', 'admin']}
       />
       <Route component={NotFound} />
     </Switch>

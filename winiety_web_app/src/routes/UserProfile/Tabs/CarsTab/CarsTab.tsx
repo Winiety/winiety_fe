@@ -28,6 +28,7 @@ const CarsTab = (props: CarsTabProps): ReactElement => {
   const handleModalClose = () => setIsModalOpen(false);
 
   const handleAddCar = (car: Omit<UserCar, 'id'>) => {
+    handleModalClose();
     addCar(car);
   };
 

@@ -49,7 +49,10 @@ const Errors = (): ReactElement => {
     setPictureId(id);
   };
 
-  const handleModalClose = () => setIsModalOpen(false);
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    getData({ pageNumber: page + 1, pageSize: rowsPerPage });
+  };
 
   return (
     <div className={classes.root}>

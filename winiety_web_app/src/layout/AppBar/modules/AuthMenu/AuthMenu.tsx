@@ -1,7 +1,7 @@
 import { IconButton, Menu, MenuItem } from '@material-ui/core';
 import { AccountCircle } from '@material-ui/icons';
 import React, { ReactElement } from 'react';
-import { useStoreActions } from 'store';
+import { useStoreActions, useStoreState } from 'store';
 import { useHistory } from 'react-router-dom';
 import appRoutes from 'routes';
 
@@ -13,6 +13,7 @@ const AuthMenu = (): ReactElement => {
   );
 
   const history = useHistory();
+  const role = useStoreState((state) => state.userSession.role);
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -57,7 +58,9 @@ const AuthMenu = (): ReactElement => {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleProfileClick}>Profil</MenuItem>
+        {role.includes('user') && (
+          <MenuItem onClick={handleProfileClick}>Profil</MenuItem>
+        )}
         <MenuItem onClick={handleLogout}>Wyloguj</MenuItem>
       </Menu>
     </div>
