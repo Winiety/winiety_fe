@@ -11,6 +11,7 @@ import {
 } from '@material-ui/core';
 import React, { ReactElement, useEffect } from 'react';
 import { ComplaintRepository, PictureRepository } from 'api/repository';
+import { format, parseISO } from 'date-fns';
 import useStyles from './use-styles';
 
 const Complaints = (): ReactElement => {
@@ -20,7 +21,6 @@ const Complaints = (): ReactElement => {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [getData, data] = ComplaintRepository.useGetAllComplaints();
   const getPicture = PictureRepository.useGetPicturePath();
-  const deleteComplaint = ComplaintRepository.useDeleteComplaint();
 
   useEffect(() => {
     getData({ pageNumber: page + 1, pageSize: rowsPerPage });
@@ -44,11 +44,6 @@ const Complaints = (): ReactElement => {
     window.open(path, '_blank');
   };
 
-  const handleComplaintDelete = async (id: number) => {
-    deleteComplaint(id);
-    getData({ pageNumber: page + 1, pageSize: rowsPerPage });
-  };
-
   return (
     <div className={classes.root}>
       <TableContainer component={Paper}>
@@ -64,7 +59,6 @@ const Complaints = (): ReactElement => {
               <TableCell>Treść zażalenia</TableCell>
               <TableCell>Data wystawienia</TableCell>
               <TableCell />
-              <TableCell />
             </TableRow>
           </TableHead>
           <TableBody>
@@ -73,7 +67,7 @@ const Complaints = (): ReactElement => {
                 <TableCell>{row.plateNumber}</TableCell>
                 <TableCell>{row.description}</TableCell>
                 <TableCell component="th" scope="row">
-                  {row.createTime}
+                  {format(parseISO(row.createTime), 'yyyy-MM-dd HH:mm:ss')}
                 </TableCell>
                 <TableCell>
                   <Button
@@ -82,15 +76,6 @@ const Complaints = (): ReactElement => {
                     color="primary"
                   >
                     Zdjęcie
-                  </Button>
-                </TableCell>
-                <TableCell>
-                  <Button
-                    onClick={async () => handleComplaintDelete(row.id)}
-                    variant="contained"
-                    color="primary"
-                  >
-                    Odrzuć
                   </Button>
                 </TableCell>
               </TableRow>

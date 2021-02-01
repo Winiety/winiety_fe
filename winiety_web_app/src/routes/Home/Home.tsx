@@ -1,4 +1,4 @@
-import { Container, CssBaseline, Button, Typography } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import React, { ReactElement } from 'react';
 import { useStoreActions, useStoreState } from 'store';
 import useStyles from './styles';
@@ -12,8 +12,7 @@ const Home = (): ReactElement => {
   );
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
+    <div className={classes.container}>
       <div className={classes.paper}>
         <img
           src="/images/logo.png"
@@ -21,11 +20,12 @@ const Home = (): ReactElement => {
           className={classes.image}
         />
         <Typography variant="h1">Winiety</Typography>
-        <Typography variant="h2">Elo!</Typography>
+        <Typography variant="h5">
+          Portal elektronicznego zakupu winiet autostradowych
+        </Typography>
         {!isAuthenticated && (
           <Button
             type="button"
-            fullWidth
             variant="contained"
             color="primary"
             className={classes.button}
@@ -35,7 +35,7 @@ const Home = (): ReactElement => {
           </Button>
         )}
       </div>
-    </Container>
+    </div>
   );
 };
 

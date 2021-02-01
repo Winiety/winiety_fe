@@ -13,7 +13,7 @@ import {
 } from '@material-ui/core';
 import React, { ReactElement, useEffect } from 'react';
 import { PaymentsRepository } from 'api/repository';
-import { Vignette } from 'api/types';
+import { format, parseISO } from 'date-fns';
 import useStyles from './use-styles';
 
 const UserVigettes = (): ReactElement => {
@@ -22,7 +22,6 @@ const UserVigettes = (): ReactElement => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [getData, data] = PaymentsRepository.useGetUserVignettes();
-  const postPaymentData = PaymentsRepository.usePostPayment();
   const postVignetteData = PaymentsRepository.usePostVignette();
 
   useEffect(() => {
@@ -44,18 +43,6 @@ const UserVigettes = (): ReactElement => {
   ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
-  };
-
-  const handlePostPayment = async (vignette: Vignette) => {
-    if (vignette.paymentStatus === 'CANCELED' || vignette.payuUrl === null) {
-      const url = await postPaymentData({
-        paymentId: vignette.id,
-        continueUrl: window.location.href,
-      });
-      window.open(url, '_self');
-    } else {
-      window.open(vignette.payuUrl, '_self');
-    }
   };
 
   const handleBuyVignette = async () => {
@@ -88,28 +75,17 @@ const UserVigettes = (): ReactElement => {
               <TableCell>Koszt winiety</TableCell>
               <TableCell>Data wygaśnięcia</TableCell>
               <TableCell>Status</TableCell>
-              <TableCell />
             </TableRow>
           </TableHead>
           <TableBody>
             {((!!data && data.results) || []).map((row) => (
               <TableRow key={row.id}>
                 <TableCell>{row.cost} PLN</TableCell>
-                <TableCell>{row.expirationDate}</TableCell>
                 <TableCell>
-                  {row.isActive ? 'Aktywna' : 'Nieaktywna'}{' '}
+                  {format(parseISO(row.expirationDate), 'yyyy-MM-dd HH:mm:ss')}
                 </TableCell>
                 <TableCell>
-                  {row.paymentStatus !== 'COMPLETED' &&
-                    row.paymentStatus !== 'PENDING' && (
-                      <Button
-                        onClick={() => handlePostPayment(row)}
-                        variant="contained"
-                        color="primary"
-                      >
-                        Zapłać
-                      </Button>
-                    )}
+                  {row.isActive ? 'Aktywna' : 'Nieaktywna'}{' '}
                 </TableCell>
               </TableRow>
             ))}
