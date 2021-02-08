@@ -7,7 +7,7 @@ import Layout from 'layout';
 import { checkSupport, requestNotificationPermission } from 'utils';
 import ReactGA from 'react-ga';
 
-const trackingId = 'G-C85JEVN201';
+const trackingId = 'UA-189221892-1';
 ReactGA.initialize(trackingId);
 
 const App = (): ReactElement => {
