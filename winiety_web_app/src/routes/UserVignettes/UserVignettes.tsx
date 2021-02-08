@@ -32,6 +32,10 @@ const UserVigettes = (): ReactElement => {
     });
   }, [getData, page, rowsPerPage]);
 
+  useEffect(() => {
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  }, []);
+
   const handleChangePage = (
     _event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
     newPage: number
