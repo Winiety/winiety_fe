@@ -18,6 +18,7 @@ import * as googleAnalytics from 'workbox-google-analytics';
 
 googleAnalytics.initialize({
   cacheName: 'AnalyticsCache',
+  parameterOverrides: { cd1: 'offline' },
 });
 
 declare const self: ServiceWorkerGlobalScope;
