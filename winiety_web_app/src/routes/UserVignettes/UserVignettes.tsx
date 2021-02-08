@@ -14,6 +14,7 @@ import {
 import React, { ReactElement, useEffect } from 'react';
 import { PaymentsRepository } from 'api/repository';
 import { format, parseISO } from 'date-fns';
+import ReactGA from 'react-ga';
 import useStyles from './use-styles';
 
 const UserVigettes = (): ReactElement => {
@@ -48,6 +49,10 @@ const UserVigettes = (): ReactElement => {
   const handleBuyVignette = async () => {
     const url = await postVignetteData({
       continueUrl: window.location.href,
+    });
+    ReactGA.event({
+      category: 'Vignette purchase',
+      action: 'User pressed buy vignette button',
     });
     window.open(url, '_self');
   };
