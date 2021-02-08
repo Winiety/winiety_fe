@@ -2,6 +2,7 @@ import { action, Action } from 'easy-peasy';
 import { signInRedirect, signOutRedirect } from 'services/userService';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
 import { displayNotification } from 'utils';
+import ReactGA from 'react-ga';
 
 export interface UserSessionModel {
   isAuthenticated: boolean;
@@ -16,6 +17,7 @@ export interface UserSessionModel {
 
 interface CustomJwtPayload extends JwtPayload {
   role?: string[] | string;
+  uniqueName: string;
 }
 
 const userSessionModel: UserSessionModel = {
@@ -53,6 +55,9 @@ const userSessionModel: UserSessionModel = {
       // eslint-disable-next-line no-param-reassign
       state.role = [userData.role].flat();
     }
+    ReactGA.set({
+      userId: userData.uniqueName,
+    });
     displayNotification('WINIETY', 'Witaj w winietach!');
   }),
   logout: action((state) => {
