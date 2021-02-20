@@ -5,6 +5,13 @@ import { useStoreRehydrated } from 'easy-peasy';
 import { BrowserRouter } from 'react-router-dom';
 import Layout from 'layout';
 import { checkSupport, requestNotificationPermission } from 'utils';
+import ReactGA from 'react-ga';
+
+const trackingId = 'UA-189221892-1';
+ReactGA.initialize(trackingId, {
+  debug: true,
+});
+ReactGA.set({ cd1: 'online' });
 
 const App = (): ReactElement => {
   const isRehydrated = useStoreRehydrated();

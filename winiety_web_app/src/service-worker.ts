@@ -14,6 +14,12 @@ import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
 import { Queue } from 'workbox-background-sync';
+import * as googleAnalytics from 'workbox-google-analytics';
+
+googleAnalytics.initialize({
+  cacheName: 'AnalyticsCache',
+  parameterOverrides: { cd1: 'offline' },
+});
 
 declare const self: ServiceWorkerGlobalScope;
 

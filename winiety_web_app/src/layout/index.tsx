@@ -2,6 +2,8 @@ import { makeStyles, MuiThemeProvider, Theme } from '@material-ui/core';
 import React, { ReactElement, useRef } from 'react';
 import { dark, light } from 'themes';
 import { useStoreState } from 'store';
+import { useHistory } from 'react-router-dom';
+import ReactGA from 'react-ga';
 import AppBar from './AppBar';
 import BottomNavigationComp from './BottomNavigation';
 
@@ -29,6 +31,12 @@ export default (props: Props): ReactElement => {
   const classes = useStyles();
 
   const isDarkTheme = useStoreState((state) => state.userSettings.isDarkTheme);
+  const history = useHistory();
+
+  history.listen(({ pathname }) => {
+    ReactGA.set({ page: pathname });
+    ReactGA.pageview(pathname);
+  });
 
   const bottomNavigationElement = useRef(
     document.getElementById('bottom__nav')
